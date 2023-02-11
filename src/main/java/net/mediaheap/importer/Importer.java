@@ -4,6 +4,7 @@ import com.google.common.io.BaseEncoding;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import net.mediaheap.database.DatabaseConnection;
 import net.mediaheap.model.MediaHeapFile;
 
 import java.io.BufferedInputStream;
@@ -16,10 +17,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 
 public class Importer {
+    @NonNull
+    private final DatabaseConnection db;
     @Getter
     @Setter
     @NonNull
     private Extractor extractor = MimeExtractor.getGlobal();
+
+    public Importer(@NonNull DatabaseConnection db) {
+        this.db = db;
+    }
 
     public static String getPathMimeType(@NonNull String path) throws IOException {
         return Files.probeContentType(FileSystems.getDefault().getPath(path));

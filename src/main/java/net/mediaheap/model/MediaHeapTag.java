@@ -10,14 +10,14 @@ import java.util.Set;
 
 @Value(staticConstructor = "of")
 public class MediaHeapTag {
-    int id = -1;
+    int id;
     int fileId;
     @NonNull String namespace;
     @NonNull String key;
     @NonNull String value;
 
-    public static @NonNull MediaHeapTag of(@NonNull MediaHeapFile file, @NonNull String namespace, @NonNull String key, @NonNull String value) {
-        return of(file.getId(), namespace, key, value);
+    public static @NonNull MediaHeapTag of(int id, @NonNull MediaHeapFile file, @NonNull String namespace, @NonNull String key, @NonNull String value) {
+        return of(id, file.getId(), namespace, key, value);
     }
 
     public static String findTagValue(@NonNull Iterable<MediaHeapTag> tags, @NonNull String namespace, @NonNull String key) {

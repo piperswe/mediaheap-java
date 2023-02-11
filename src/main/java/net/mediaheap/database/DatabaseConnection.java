@@ -40,4 +40,8 @@ public class DatabaseConnection implements AutoCloseable {
     public void close() throws SQLException {
         connection.close();
     }
+
+    public @NonNull TagsTable getFiles() {
+        return new TagsTable(this);
+    }
 }

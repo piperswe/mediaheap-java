@@ -36,7 +36,7 @@ public class MediaHeapTagListFactory {
 
     public @NonNull MediaHeapTagListFactory add(@NonNull String key, String value) {
         if (value != null && !value.isBlank()) {
-            tags.add(MediaHeapTag.of(fileId, namespace, key, value));
+            tags.add(MediaHeapTag.of(-1, fileId, namespace, key, value));
         }
         return this;
     }

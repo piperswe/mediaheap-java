@@ -12,6 +12,7 @@ public class SingleConnectionDataSource implements DataSource {
     private final UncloseableConnection connection;
     private PrintWriter logWriter = null;
     private int loginTimeout = 0;
+
     public SingleConnectionDataSource(Connection connection) {
         this.connection = new UncloseableConnection(connection);
     }
