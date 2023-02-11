@@ -13,8 +13,15 @@ public class DatabaseConnection implements AutoCloseable {
     @Getter
     private final @NonNull Connection connection;
 
+    @Getter
+    private final @NonNull FilesTable files;
+    @Getter
+    private final @NonNull TagsTable tags;
+
     private DatabaseConnection(@NonNull Connection connection) {
         this.connection = connection;
+        files = new FilesTable(this);
+        tags = new TagsTable(this);
     }
 
     public static @NonNull DatabaseConnection of(@NonNull Connection connection) {
@@ -39,9 +46,5 @@ public class DatabaseConnection implements AutoCloseable {
     @Override
     public void close() throws SQLException {
         connection.close();
-    }
-
-    public @NonNull TagsTable getFiles() {
-        return new TagsTable(this);
     }
 }

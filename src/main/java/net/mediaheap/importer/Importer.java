@@ -14,6 +14,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.Collections;
 
 public class Importer {
@@ -56,18 +57,20 @@ public class Importer {
         }
     }
 
-    public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, String mimeType) throws IOException {
+    public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, String mimeType) throws IOException, SQLException {
         var hashes = hashFile(path);
         var fileType = "application/octet-stream";
         if (mimeType != null && !"".equals(mimeType)) {
             fileType = mimeType;
         }
         var file = MediaHeapFile.of(path, hashes.sha256, hashes.sha512, hashes.md5, fileType);
-        getExtractor().extractTagsFrom(file, Collections.emptyList());
+        file = db.getFiles().insertFile(file);
+        var tags = getExtractor().extractTagsFrom(file, Collections.emptyList());
+        db.getTags().insertTags(tags);
         return file;
     }
 
-    public @NonNull MediaHeapFile importFrom(@NonNull String path) throws IOException {
+    public @NonNull MediaHeapFile importFrom(@NonNull String path) throws IOException, SQLException {
         var contentType = getPathMimeType(path);
         return importFromWithMimeType(path, contentType);
     }

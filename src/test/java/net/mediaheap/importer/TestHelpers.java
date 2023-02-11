@@ -1,5 +1,6 @@
 package net.mediaheap.importer;
 
+import lombok.NonNull;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
 
@@ -11,13 +12,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestHelpers {
-    public static List<MediaHeapTag> tagsFromTestFile(Extractor extractor, String filename) throws IOException {
-        var path = "./src/test/resources/net/mediaheap/importer/" + filename;
+    public static @NonNull String testFilePath(@NonNull String filename) {
+        return "./src/test/resources/net/mediaheap/importer/" + filename;
+    }
+
+    public static @NonNull List<@NonNull MediaHeapTag> tagsFromTestFile(@NonNull Extractor extractor, @NonNull String filename) throws IOException {
+        var path = testFilePath(filename);
         var file = MediaHeapFile.of(path, "", "", "", Importer.getPathMimeType(path));
         return extractor.extractTagsFrom(file, Collections.emptyList());
     }
 
-    public static void assertHasTag(String namespace, List<MediaHeapTag> tags, String key, String value) {
+    public static void assertHasTag(@NonNull String namespace, @NonNull List<@NonNull MediaHeapTag> tags, @NonNull String key, String value) {
         for (var tag : tags) {
             if (tag.getNamespace().equals(namespace) && tag.getKey().equals(key)) {
                 assertEquals(value, tag.getValue());

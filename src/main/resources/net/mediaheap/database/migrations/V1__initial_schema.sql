@@ -7,7 +7,7 @@ CREATE TABLE File
     sha512Hash TEXT NOT NULL,
     md5Hash    TEXT NOT NULL,
 
-    fileType   TEXT NOT NULL
+    fileType   TEXT
 );
 
 CREATE TABLE Tag
