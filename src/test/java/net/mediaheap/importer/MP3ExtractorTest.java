@@ -41,4 +41,19 @@ class MP3ExtractorTest {
         assertHasTag(MP3Extractor.V2NS, tags, "TPE1", "Artist");
         assertHasTag(MP3Extractor.V2NS, tags, "TYER", "2023");
     }
+
+    @Test
+    void real() throws IOException {
+        var tags = tagsFromTestFile(new MP3Extractor(), "mp3/Study and Relax.mp3");
+
+        assertHasTag(MP3Extractor.V1NS, tags, "TAL", "Royalty Free");
+        assertHasTag(MP3Extractor.V1NS, tags, "TP1", "Kevin MacLeod");
+        assertHasTag(MP3Extractor.V1NS, tags, "TYE", "2019");
+        assertHasTag(MP3Extractor.V1NS, tags, "TSS", "Logic Pro X 10.4.7");
+
+        assertHasTag(MP3Extractor.V2NS, tags, "TAL", "Royalty Free");
+        assertHasTag(MP3Extractor.V2NS, tags, "TP1", "Kevin MacLeod");
+        assertHasTag(MP3Extractor.V2NS, tags, "TYE", "2019");
+        assertHasTag(MP3Extractor.V2NS, tags, "TSS", "Logic Pro X 10.4.7");
+    }
 }
