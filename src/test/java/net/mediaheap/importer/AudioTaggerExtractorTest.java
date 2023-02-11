@@ -19,13 +19,13 @@ public class AudioTaggerExtractorTest {
     public static final Extractor M4A_EXTRACTOR = new AudioTaggerExtractor(M4A_NS);
 
     @Test
-    void testMissingFlac() throws IOException {
+    void missingFlac() throws IOException {
         var tags = tagsFromTestFile(FLAC_EXTRACTOR, "flac/missing_tags.flac");
         assertEquals(1, tags.size(), "More than just the FLAC VENDOR tag were saved");
     }
 
     @Test
-    void testFilledFlac() throws IOException {
+    void filledFlac() throws IOException {
         var tags = tagsFromTestFile(FLAC_EXTRACTOR, "flac/filled_tags.flac");
         assertHasTag(FLAC_NS, tags, "TITLE", "Title");
         assertHasTag(FLAC_NS, tags, "ARTIST", "Artist");
@@ -40,13 +40,13 @@ public class AudioTaggerExtractorTest {
     }
 
     @Test
-    void testMissingOgg() throws IOException {
+    void missingOgg() throws IOException {
         var tags = tagsFromTestFile(OGG_EXTRACTOR, "ogg/missing_tags.ogg");
         assertEquals(1, tags.size(), "More than just the OGG VENDOR tag were saved");
     }
 
     @Test
-    void testFilledOgg() throws IOException {
+    void filledOgg() throws IOException {
         var tags = tagsFromTestFile(OGG_EXTRACTOR, "ogg/filled_tags.ogg");
         assertHasTag(OGG_NS, tags, "TITLE", "Title");
         assertHasTag(OGG_NS, tags, "ARTIST", "Artist");
@@ -61,13 +61,13 @@ public class AudioTaggerExtractorTest {
     }
 
     @Test
-    void testMissingWav() throws IOException {
+    void missingWav() throws IOException {
         var tags = tagsFromTestFile(WAV_EXTRACTOR, "wav/missing_tags.wav");
         assertEquals(0, tags.size());
     }
 
     @Test
-    void testFilledWav() throws IOException {
+    void filledWav() throws IOException {
         var tags = tagsFromTestFile(WAV_EXTRACTOR, "wav/filled_tags.wav");
         assertHasTag(WAV_NS, tags, "TIT2", "Title");
         assertHasTag(WAV_NS, tags, "TPE1", "Artist");
@@ -82,13 +82,13 @@ public class AudioTaggerExtractorTest {
     }
 
     @Test
-    void testMissingM4a() throws IOException {
+    void missingM4a() throws IOException {
         var tags = tagsFromTestFile(M4A_EXTRACTOR, "m4a/missing_tags.m4a");
         assertEquals(1, tags.size(), "More than just the M4A tool tag were saved");
     }
 
     @Test
-    void testFilledM4a() throws IOException {
+    void filledM4a() throws IOException {
         var tags = tagsFromTestFile(M4A_EXTRACTOR, "m4a/filled_tags.m4a");
         assertHasTag(M4A_NS, tags, "_cnam", "Title");
         assertHasTag(M4A_NS, tags, "_cART", "Artist");

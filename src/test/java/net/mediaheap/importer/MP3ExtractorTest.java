@@ -10,13 +10,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MP3ExtractorTest {
     @Test
-    void testMissingId3() throws IOException {
+    void missingId3() throws IOException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/missing_id3.mp3");
         assertTrue(tags.isEmpty());
     }
 
     @Test
-    void testId3v2() throws IOException {
+    void id3v2() throws IOException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/id3v2.mp3");
         assertHasTag(MP3Extractor.V2NS, tags, "TALB", "Album Title");
         assertHasTag(MP3Extractor.V2NS, tags, "TCON", "Pop");
@@ -26,7 +26,7 @@ class MP3ExtractorTest {
     }
 
     @Test
-    void testBoth() throws IOException {
+    void both() throws IOException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/both.mp3");
 
         assertHasTag(MP3Extractor.V1NS, tags, "TALB", "Album");

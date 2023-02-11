@@ -15,7 +15,7 @@ class NamespaceRegistryTest {
     }
 
     @Test
-    public void testBuiltinsExist() throws IOException {
+    public void builtinsExist() throws IOException {
         var registry = new NamespaceRegistry();
         registry.registerBuiltin();
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v1");
