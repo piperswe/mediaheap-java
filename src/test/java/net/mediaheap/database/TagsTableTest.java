@@ -18,9 +18,12 @@ class TagsTableTest {
 
     @Test
     void insertTags() throws SQLException {
-        int[] results = db.getFiles()
-                .insertTags(MediaHeapTagListFactory.start(-1, "ns").add("hello", "world").build());
-        assertEquals(1, results.length);
+        db.getFiles()
+                .insertTags(
+                        MediaHeapTagListFactory.start(-1, "ns")
+                                .add("hello", "world")
+                                .build()
+                );
     }
 
     @Test

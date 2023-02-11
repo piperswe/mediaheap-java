@@ -16,10 +16,9 @@ public class TagsTable {
         this.db = db;
     }
 
-    public int[] insertTags(List<MediaHeapTag> tags) throws SQLException {
+    public void insertTags(List<MediaHeapTag> tags) throws SQLException {
         var conn = db.getConnection();
         conn.setAutoCommit(false);
-        int[] result;
         try (var stmt = db.getConnection().prepareStatement("INSERT INTO Tag(fileId, namespace, key, value) VALUES (?, ?, ?, ?);")) {
             for (var tag : tags) {
                 stmt.setInt(1, tag.getFileId());
@@ -28,10 +27,12 @@ public class TagsTable {
                 stmt.setString(4, tag.getValue());
                 stmt.addBatch();
             }
-            result = stmt.executeBatch();
+            stmt.executeBatch();
+        } catch (Exception e) {
+            conn.rollback();
+            throw e;
         }
         conn.commit();
-        return result;
     }
 
     public List<MediaHeapTag> getTagsForFile(int fileId) throws SQLException {
