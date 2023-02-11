@@ -1,6 +1,6 @@
 {
-  "displayName": "ID3v1 Tags",
-  "uri": "https://schemas.mediaheap.net/id3/v1",
+  "displayName": "ID3v2 Tags",
+  "uri": "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v2",
   "keys": {
     "TIT2": {
       "displayName": "Track Title"
@@ -22,6 +22,15 @@
     },
     "TCON": {
       "displayName": "Genre"
+    },
+    "TPOS": {
+      "displayName": "Disc Number"
+    },
+    "TPE2": {
+      "displayName": "Album Artist"
+    },
+    "TCOM": {
+      "displayName": "Composer"
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "displayName": "M4A Tags",
-  "uri": "https://schemas.mediaheap.net/m4a",
+  "uri": "https://schemas.mediaheap.net/file/audio/tags/m4a",
   "keys": {
     "_cnam": {
       "displayName": "Track Title"

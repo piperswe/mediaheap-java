@@ -18,8 +18,8 @@ class NamespaceRegistryTest {
     public void testBuiltinsExist() throws IOException {
         var registry = new NamespaceRegistry();
         registry.registerBuiltin();
-        assertBuiltinExists(registry, "https://schemas.mediaheap.net/id3/v1");
-        assertBuiltinExists(registry, "https://schemas.mediaheap.net/id3/v2");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v1");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v2");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/album");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/album-artist");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/artist");
@@ -29,9 +29,9 @@ class NamespaceRegistryTest {
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/release-group");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/work");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track");
-        assertBuiltinExists(registry, "https://schemas.mediaheap.net/flac");
-        assertBuiltinExists(registry, "https://schemas.mediaheap.net/m4a");
-        assertBuiltinExists(registry, "https://schemas.mediaheap.net/ogg");
-        assertBuiltinExists(registry, "https://schemas.mediaheap.net/wav");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/flac");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/m4a");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/ogg");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/file/audio/tags/wav");
     }
 }

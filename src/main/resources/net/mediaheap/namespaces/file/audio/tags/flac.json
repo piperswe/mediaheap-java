@@ -1,6 +1,6 @@
 {
   "displayName": "FLAC Tags",
-  "uri": "https://schemas.mediaheap.net/flac",
+  "uri": "https://schemas.mediaheap.net/file/audio/tags/flac",
   "keys": {
     "TITLE": {
       "displayName": "Title"

@@ -9,13 +9,13 @@ import static net.mediaheap.importer.TestHelpers.tagsFromTestFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AudioTaggerExtractorTest {
-    public static final String FLAC_NS = "https://schemas.mediaheap.net/flac";
+    public static final String FLAC_NS = "https://schemas.mediaheap.net/file/audio/tags/flac";
     public static final Extractor FLAC_EXTRACTOR = new AudioTaggerExtractor(FLAC_NS);
-    public static final String OGG_NS = "https://schemas.mediaheap.net/ogg";
+    public static final String OGG_NS = "https://schemas.mediaheap.net/file/audio/tags/ogg";
     public static final Extractor OGG_EXTRACTOR = new AudioTaggerExtractor(OGG_NS);
-    public static final String WAV_NS = "https://schemas.mediaheap.net/wav";
+    public static final String WAV_NS = "https://schemas.mediaheap.net/file/audio/tags/wav";
     public static final Extractor WAV_EXTRACTOR = new AudioTaggerExtractor(WAV_NS);
-    public static final String M4A_NS = "https://schemas.mediaheap.net/m4a";
+    public static final String M4A_NS = "https://schemas.mediaheap.net/file/audio/tags/m4a";
     public static final Extractor M4A_EXTRACTOR = new AudioTaggerExtractor(M4A_NS);
 
     @Test

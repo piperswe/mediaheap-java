@@ -32,15 +32,15 @@ public class MimeExtractor implements Extractor {
         var mp3 = new MP3Extractor();
         registerExtractors("audio/mpeg", mp3, musicbrainz);
         registerExtractors("audio/mp3", mp3, musicbrainz);
-        var flac = new AudioTaggerExtractor("https://schemas.mediaheap.net/flac");
+        var flac = new AudioTaggerExtractor("https://schemas.mediaheap.net/file/audio/tags/flac");
         registerExtractors("audio/flac", flac, musicbrainz);
         registerExtractors("audio/x-flac", flac, musicbrainz);
-        var m4a = new AudioTaggerExtractor("https://schemas.mediaheap.net/m4a");
+        var m4a = new AudioTaggerExtractor("https://schemas.mediaheap.net/file/audio/tags/m4a");
         registerExtractors("audio/mp4", m4a, musicbrainz);
         registerExtractors("audio/m4a", m4a, musicbrainz);
-        var ogg = new AudioTaggerExtractor("https://schemas.mediaheap.net/ogg");
+        var ogg = new AudioTaggerExtractor("https://schemas.mediaheap.net/file/audio/tags/ogg");
         registerExtractors("audio/ogg", ogg, musicbrainz);
-        var wav = new AudioTaggerExtractor("https://schemas.mediaheap.net/wav");
+        var wav = new AudioTaggerExtractor("https://schemas.mediaheap.net/file/audio/tags/wav");
         registerExtractors("audio/wav", wav, musicbrainz);
         registerExtractors("audio/x-wav", wav, musicbrainz);
     }

@@ -1,6 +1,6 @@
 {
   "displayName": "Ogg Tags",
-  "uri": "https://schemas.mediaheap.net/ogg",
+  "uri": "https://schemas.mediaheap.net/file/audio/tags/ogg",
   "keys": {
     "TITLE": {
       "displayName": "Title"

@@ -15,8 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class MP3Extractor implements Extractor {
-    static final String V1NS = "https://schemas.mediaheap.net/id3/v1";
-    static final String V2NS = "https://schemas.mediaheap.net/id3/v2";
+    static final String V1NS = "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v1";
+    static final String V2NS = "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v2";
 
     @Override
     public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException {

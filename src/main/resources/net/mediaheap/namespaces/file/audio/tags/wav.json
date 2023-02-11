@@ -1,6 +1,6 @@
 {
   "displayName": "WAV Tags",
-  "uri": "https://schemas.mediaheap.net/wav",
+  "uri": "https://schemas.mediaheap.net/file/audio/tags/wav",
   "keys": {
     "TIT2": {
       "displayName": "Track Title"

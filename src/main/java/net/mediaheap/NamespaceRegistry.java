@@ -37,8 +37,12 @@ public class NamespaceRegistry {
     }
 
     public void registerBuiltin() throws IOException {
-        registerBuiltinFromResource("id3/v1.json");
-        registerBuiltinFromResource("id3/v2.json");
+        registerBuiltinFromResource("file/audio/tags/mp3/id3v1.json");
+        registerBuiltinFromResource("file/audio/tags/mp3/id3v2.json");
+        registerBuiltinFromResource("file/audio/tags/flac.json");
+        registerBuiltinFromResource("file/audio/tags/m4a.json");
+        registerBuiltinFromResource("file/audio/tags/ogg.json");
+        registerBuiltinFromResource("file/audio/tags/wav.json");
         registerBuiltinFromResource("musicbrainz/track/album.json");
         registerBuiltinFromResource("musicbrainz/track/album-artist.json");
         registerBuiltinFromResource("musicbrainz/track/artist.json");
@@ -48,9 +52,5 @@ public class NamespaceRegistry {
         registerBuiltinFromResource("musicbrainz/track/release-group.json");
         registerBuiltinFromResource("musicbrainz/track/work.json");
         registerBuiltinFromResource("musicbrainz/track.json");
-        registerBuiltinFromResource("flac.json");
-        registerBuiltinFromResource("m4a.json");
-        registerBuiltinFromResource("ogg.json");
-        registerBuiltinFromResource("wav.json");
     }
 }

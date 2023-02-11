@@ -18,12 +18,12 @@ import java.util.List;
 
 public class AudioTaggerExtractor implements Extractor {
     public static final String[] AUDIO_NAMESPACES = new String[] {
-            "https://schemas.mediaheap.net/id3/v1",
-            "https://schemas.mediaheap.net/id3/v2",
-            "https://schemas.mediaheap.net/flac",
-            "https://schemas.mediaheap.net/m4a",
-            "https://schemas.mediaheap.net/ogg",
-            "https://schemas.mediaheap.net/wav"
+            "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v1",
+            "https://schemas.mediaheap.net/file/audio/tags/mp3/id3v2",
+            "https://schemas.mediaheap.net/file/audio/tags/flac",
+            "https://schemas.mediaheap.net/file/audio/tags/m4a",
+            "https://schemas.mediaheap.net/file/audio/tags/ogg",
+            "https://schemas.mediaheap.net/file/audio/tags/wav"
     };
 
     private static final String COPYRIGHT_SYMBOL = String.valueOf((char) 0xa9);
