@@ -58,7 +58,7 @@ class ImporterTest {
         var file = importer.importFrom(testFilePath("flac/filled_tags.flac"));
         assertNotNull(file);
         assertTrue(file.getPath().endsWith("filled_tags.flac"));
-        assertEquals("audio/x-flac", file.getFileType());
+        assertTrue(file.getFileType().equals("audio/x-flac") || file.getFileType().equals("audio/flac"), String.format("MIME type %s doesn't seem to be FLAC", file.getFileType()));
         assertEquals("3f7a61ec2b8d8953605fc578625a483713252832530ecf3c3de34d75a0c762c0", file.getSha512Hash());
         var tags = db.getTags().getTagsForFile(file);
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "TITLE", "Title");
