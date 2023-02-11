@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  checks: write
 
 jobs:
   build:
@@ -32,4 +33,17 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: flywayMigrate build --scan
+          arguments: flywayMigrate build shadowJar --scan
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: libs
+          path: build/libs
+      - uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: build/reports

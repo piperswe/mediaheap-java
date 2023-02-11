@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'io.freefair.lombok' version '6.6.1'
     id 'org.flywaydb.flyway' version '9.8.1'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'net.mediaheap'

@@ -9,6 +9,58 @@ import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 
 public class SingleConnectionDataSource implements DataSource {
+    private final UncloseableConnection connection;
+    private PrintWriter logWriter = null;
+    private int loginTimeout = 0;
+    public SingleConnectionDataSource(Connection connection) {
+        this.connection = new UncloseableConnection(connection);
+    }
+
+    @Override
+    public UncloseableConnection getConnection() throws SQLException {
+        return connection;
+    }
+
+    @Override
+    public UncloseableConnection getConnection(String username, String password) throws SQLException {
+        return connection;
+    }
+
+    @Override
+    public PrintWriter getLogWriter() throws SQLException {
+        return logWriter;
+    }
+
+    @Override
+    public void setLogWriter(PrintWriter out) throws SQLException {
+        logWriter = out;
+    }
+
+    @Override
+    public int getLoginTimeout() throws SQLException {
+        return loginTimeout;
+    }
+
+    @Override
+    public void setLoginTimeout(int seconds) throws SQLException {
+        loginTimeout = seconds;
+    }
+
+    @Override
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        throw new SQLFeatureNotSupportedException();
+    }
+
+    @Override
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        return false;
+    }
+
     private static class UncloseableConnection implements Connection {
         private final Connection c;
 
@@ -37,13 +89,13 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void setAutoCommit(boolean autoCommit) throws SQLException {
-            c.setAutoCommit(autoCommit);
+        public boolean getAutoCommit() throws SQLException {
+            return c.getAutoCommit();
         }
 
         @Override
-        public boolean getAutoCommit() throws SQLException {
-            return c.getAutoCommit();
+        public void setAutoCommit(boolean autoCommit) throws SQLException {
+            c.setAutoCommit(autoCommit);
         }
 
         @Override
@@ -72,18 +124,13 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void setReadOnly(boolean readOnly) throws SQLException {
-            c.setReadOnly(readOnly);
-        }
-
-        @Override
         public boolean isReadOnly() throws SQLException {
             return c.isReadOnly();
         }
 
         @Override
-        public void setCatalog(String catalog) throws SQLException {
-            c.setCatalog(catalog);
+        public void setReadOnly(boolean readOnly) throws SQLException {
+            c.setReadOnly(readOnly);
         }
 
         @Override
@@ -92,13 +139,18 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void setTransactionIsolation(int level) throws SQLException {
-            c.setTransactionIsolation(level);
+        public void setCatalog(String catalog) throws SQLException {
+            c.setCatalog(catalog);
         }
 
         @Override
         public int getTransactionIsolation() throws SQLException {
             return c.getTransactionIsolation();
+        }
+
+        @Override
+        public void setTransactionIsolation(int level) throws SQLException {
+            c.setTransactionIsolation(level);
         }
 
         @Override
@@ -137,13 +189,13 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void setHoldability(int holdability) throws SQLException {
-            c.setHoldability(holdability);
+        public int getHoldability() throws SQLException {
+            return c.getHoldability();
         }
 
         @Override
-        public int getHoldability() throws SQLException {
-            return c.getHoldability();
+        public void setHoldability(int holdability) throws SQLException {
+            c.setHoldability(holdability);
         }
 
         @Override
@@ -227,11 +279,6 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void setClientInfo(Properties properties) throws SQLClientInfoException {
-            c.setClientInfo(properties);
-        }
-
-        @Override
         public String getClientInfo(String name) throws SQLException {
             return c.getClientInfo(name);
         }
@@ -239,6 +286,11 @@ public class SingleConnectionDataSource implements DataSource {
         @Override
         public Properties getClientInfo() throws SQLException {
             return c.getClientInfo();
+        }
+
+        @Override
+        public void setClientInfo(Properties properties) throws SQLClientInfoException {
+            c.setClientInfo(properties);
         }
 
         @Override
@@ -252,13 +304,13 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void setSchema(String schema) throws SQLException {
-            c.setSchema(schema);
+        public String getSchema() throws SQLException {
+            return c.getSchema();
         }
 
         @Override
-        public String getSchema() throws SQLException {
-            return c.getSchema();
+        public void setSchema(String schema) throws SQLException {
+            c.setSchema(schema);
         }
 
         @Override
@@ -290,58 +342,5 @@ public class SingleConnectionDataSource implements DataSource {
         public boolean isWrapperFor(Class<?> iface) throws SQLException {
             return iface.isInstance(c) || c.isWrapperFor(iface);
         }
-    }
-
-    private final UncloseableConnection connection;
-    private PrintWriter logWriter = null;
-    private int loginTimeout = 0;
-
-    public SingleConnectionDataSource(Connection connection) {
-        this.connection = new UncloseableConnection(connection);
-    }
-
-    @Override
-    public UncloseableConnection getConnection() throws SQLException {
-        return connection;
-    }
-
-    @Override
-    public UncloseableConnection getConnection(String username, String password) throws SQLException {
-        return connection;
-    }
-
-    @Override
-    public PrintWriter getLogWriter() throws SQLException {
-        return logWriter;
-    }
-
-    @Override
-    public void setLogWriter(PrintWriter out) throws SQLException {
-        logWriter = out;
-    }
-
-    @Override
-    public int getLoginTimeout() throws SQLException {
-        return loginTimeout;
-    }
-
-    @Override
-    public void setLoginTimeout(int seconds) throws SQLException {
-        loginTimeout = seconds;
-    }
-
-    @Override
-    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-        throw new SQLFeatureNotSupportedException();
-    }
-
-    @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
-        return false;
     }
 }
