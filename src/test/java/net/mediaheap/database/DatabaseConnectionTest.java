@@ -10,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DatabaseConnectionTest {
     @Test
-    void inMemory() throws SQLException {
-        var db = DatabaseConnection.inMemory();
+    void temporaryDatabase() throws SQLException {
+        var db = DatabaseConnection.temporaryDatabase();
         db.close();
     }
 
     @Test
     void runMigrations() throws SQLException {
-        @Cleanup var db = DatabaseConnection.inMemory();
+        @Cleanup var db = DatabaseConnection.temporaryDatabase();
         var result = db.runMigrations();
         assertTrue(result.success);
         assertTrue(result.migrations.size() > 0);

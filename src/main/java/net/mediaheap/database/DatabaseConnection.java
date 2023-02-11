@@ -21,12 +21,12 @@ public class DatabaseConnection implements AutoCloseable {
         return new DatabaseConnection(connection);
     }
 
-    public static @NonNull DatabaseConnection inMemory() throws SQLException {
-        return of(DriverManager.getConnection("jdbc:sqlite::memory:"));
+    public static @NonNull DatabaseConnection temporaryDatabase() throws SQLException {
+        return of(DriverManager.getConnection("jdbc:sqlite:"));
     }
 
     public static @NonNull DatabaseConnection testConnection() throws SQLException {
-        var conn = inMemory();
+        var conn = temporaryDatabase();
         conn.runMigrations();
         return conn;
     }
