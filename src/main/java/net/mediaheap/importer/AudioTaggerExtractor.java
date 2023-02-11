@@ -12,13 +12,12 @@ import org.jaudiotagger.tag.TagField;
 import org.jaudiotagger.tag.TagTextField;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class AudioTaggerExtractor implements Extractor {
-    private static final String COPYRIGHT_SYMBOL = new String(new byte[]{(byte) 0xa9});
+    private static final String COPYRIGHT_SYMBOL = String.valueOf((char) 0xa9);
 
     private final String ns;
 
@@ -26,11 +25,12 @@ public class AudioTaggerExtractor implements Extractor {
         this.ns = ns;
     }
 
-    static void addTagsFromTag(MediaHeapFile file, List<MediaHeapTag> tags, Tag fileTag, String namespace) throws UnsupportedEncodingException {
+    static void addTagsFromTag(MediaHeapFile file, List<MediaHeapTag> tags, Tag fileTag, String namespace) {
         if (fileTag != null) {
             for (Iterator<TagField> it = fileTag.getFields(); it.hasNext(); ) {
                 var field = it.next();
                 if (field instanceof TagTextField textField) {
+                    System.out.printf("id %s%n", field.getId());
                     tags.add(new MediaHeapTag(file, namespace, field.getId().replace(COPYRIGHT_SYMBOL, "_c"), textField.getContent()));
                 }
             }
