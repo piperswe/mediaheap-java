@@ -12,7 +12,7 @@ public class MimeExtractorTest {
     private MimeExtractor extractor;
 
     @BeforeEach
-    public void init() {
+    public void setUp() {
         extractor = new MimeExtractor();
         extractor.registerBuiltinExtractors();
     }

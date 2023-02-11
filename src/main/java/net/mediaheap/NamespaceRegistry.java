@@ -11,7 +11,7 @@ import java.util.Map;
 public class NamespaceRegistry {
     private static final NamespaceRegistry global = new NamespaceRegistry();
     private static final Gson gson = new Gson();
-    private Map<String, NamespaceSchema> registered = new HashMap<>();
+    private final Map<String, NamespaceSchema> registered = new HashMap<>();
 
     public static NamespaceRegistry getGlobal() {
         return global;
@@ -26,6 +26,7 @@ public class NamespaceRegistry {
     }
 
     private void registerBuiltinFromResource(String path) throws IOException {
+        path = "/net/mediaheap/namespaces/" + path;
         var resource = getClass().getResource(path);
         assert resource != null;
         NamespaceSchema namespace;
@@ -36,6 +37,11 @@ public class NamespaceRegistry {
     }
 
     public void registerBuiltin() throws IOException {
-        registerBuiltinFromResource("/net/mediaheap/namespaces/id3/v1.json");
+        registerBuiltinFromResource("id3/v1.json");
+        registerBuiltinFromResource("id3/v2.json");
+        registerBuiltinFromResource("flac.json");
+        registerBuiltinFromResource("m4a.json");
+        registerBuiltinFromResource("ogg.json");
+        registerBuiltinFromResource("wav.json");
     }
 }
