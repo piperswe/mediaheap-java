@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "mkhl.direnv",
+    "pinage404.nix-extension-pack",
+    "vscjava.vscode-gradle"
+  ]
+}

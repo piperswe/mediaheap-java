@@ -12,6 +12,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestHelpers {
+    public static void assertIsOne(String x, String... ys) {
+        for (var y : ys) {
+            if (y.equals(x)) return;
+        }
+        fail(String.format("%s is not one of %s", x, String.join(", ", ys)));
+    }
+
     public static @NonNull String testFilePath(@NonNull String filename) {
         return "./src/test/resources/net/mediaheap/importer/" + filename;
     }

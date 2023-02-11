@@ -1,6 +1,8 @@
 package net.mediaheap.importer;
 
 import com.google.common.io.BaseEncoding;
+
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -40,7 +42,8 @@ public class Importer {
             var sha256 = MessageDigest.getInstance("SHA-256");
             var sha512 = MessageDigest.getInstance("SHA-512/256");
             var md5 = MessageDigest.getInstance("MD5");
-            var bis = new BufferedInputStream(new FileInputStream(path));
+            @Cleanup var fis = new FileInputStream(path);
+            @Cleanup var bis = new BufferedInputStream(fis);
             while ((count = bis.read(buffer)) > 0) {
                 sha256.update(buffer, 0, count);
                 sha512.update(buffer, 0, count);
