@@ -7,7 +7,7 @@ import org.musicbrainz.MBWS2Exception;
 public class HTTPMusicbrainzClient implements MusicbrainzClient {
     @Override
     public Artist getArtist(@NonNull String id) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.Artist();
+        var controller = new org.musicbrainz.controller.Artist("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
         var artist = controller.getComplete(id);
         if (artist == null) {
             return null;
@@ -18,7 +18,7 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
 
     @Override
     public Recording getRecording(@NonNull String id) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.Recording();
+        var controller = new org.musicbrainz.controller.Recording("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
         var recording = controller.getComplete(id);
         if (recording == null) {
             return null;
@@ -29,7 +29,7 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
 
     @Override
     public Release getRelease(@NonNull String id) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.Release();
+        var controller = new org.musicbrainz.controller.Release("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
         var release = controller.getComplete(id);
         if (release == null) {
             return null;
@@ -40,7 +40,7 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
 
     @Override
     public ReleaseGroup getReleaseGroup(@NonNull String id) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.ReleaseGroup();
+        var controller = new org.musicbrainz.controller.ReleaseGroup("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
         var releaseGroup = controller.getComplete(id);
         if (releaseGroup == null) {
             return null;
@@ -51,7 +51,7 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
 
     @Override
     public Track getTrack(@NonNull String releaseId, @NonNull String trackId) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.Release();
+        var controller = new org.musicbrainz.controller.Release("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
         var release = controller.getComplete(releaseId);
         if (release != null) {
             var mediums = release.getMediumList();
@@ -67,7 +67,7 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
 
     @Override
     public Work getWork(@NonNull String id) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.Work();
+        var controller = new org.musicbrainz.controller.Work("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
         var work = controller.getComplete(id);
         if (work == null) {
             return null;
