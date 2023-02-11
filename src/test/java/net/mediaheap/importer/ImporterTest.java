@@ -62,5 +62,13 @@ class ImporterTest {
         assertEquals("3f7a61ec2b8d8953605fc578625a483713252832530ecf3c3de34d75a0c762c0", file.getSha512Hash());
         var tags = db.getTags().getTagsForFile(file);
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "TITLE", "Title");
+
+        file = importer.importFrom(testFilePath("mp3/Study and Relax.mp3"));
+        assertNotNull(file);
+        assertTrue(file.getPath().endsWith("Study and Relax.mp3"));
+        assertEquals("audio/mpeg", file.getFileType());
+        assertEquals("ea519c62546258f788e2e2f1b795d29cdc6b68aebb0bf2132a1c3e4e0c89c9a0", file.getSha512Hash());
+        tags = db.getTags().getTagsForFile(file);
+        assertHasTag(MP3Extractor.V2NS, tags, "TP1", "Kevin MacLeod");
     }
 }
