@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface Extractor {
-    List<MediaHeapTag> extractTagsFrom(MediaHeapFile file) throws IOException;
+    List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException;
 }

@@ -1,0 +1,37 @@
+{
+  "displayName": "MusicBrainz Track - Original Release",
+  "uri": "https://schemas.mediaheap.net/musicbrainz/track/original-album",
+  "keys": {
+    "fetched": {
+      "displayName": "Date Fetched from MusicBrainz",
+      "interpret": "date"
+    },
+    "id": {
+      "displayName": "Release MusicBrainz Identifier (MBID)",
+      "link": "https://musicbrainz.org/release/{}"
+    },
+    "title": {
+      "displayName": "Title"
+    },
+    "status": {
+      "displayName": "Status"
+    },
+    "quality": {
+      "displayName": "Quality"
+    },
+    "language": {
+      "displayName": "Language"
+    },
+    "script": {
+      "displayName": "Script"
+    },
+    "date": {
+      "displayName": "Date",
+      "interpret": "date"
+    },
+    "country": {
+      "displayName": "Country",
+      "interpret": "countryCode"
+    }
+  }
+}

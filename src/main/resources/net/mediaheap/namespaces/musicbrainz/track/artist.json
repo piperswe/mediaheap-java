@@ -1,0 +1,53 @@
+{
+  "displayName": "MusicBrainz Track - Artist",
+  "uri": "https://schemas.mediaheap.net/musicbrainz/track/artist",
+  "keys": {
+    "fetched": {
+      "displayName": "Date Fetched from MusicBrainz",
+      "interpret": "date"
+    },
+    "id": {
+      "displayName": "Artist MusicBrainz Identifier (MBID)",
+      "link": "https://musicbrainz.org/artist/{}"
+    },
+    "name": {
+      "displayName": "Name"
+    },
+    "sort-name": {
+      "displayName": "Sort Name"
+    },
+    "disambiguation": {
+      "displayName": "Disambiguation"
+    },
+    "isni": {
+      "displayName": "ISNI"
+    },
+    "country": {
+      "displayName": "Country",
+      "interpret": "countryCode"
+    },
+    "area-id": {
+      "displayName": "Area MBID",
+      "link": "https://musicbrainz.org/area/{}"
+    },
+    "begin-area-id": {
+      "displayName": "Begin Area MBID",
+      "link": "https://musicbrainz.org/area/{}"
+    },
+    "end-area-id": {
+      "displayName": "End Area MBID",
+      "link": "https://musicbrainz.org/area/{}"
+    },
+    "begin": {
+      "displayName": "Begin",
+      "interpret": "date"
+    },
+    "end": {
+      "displayName": "End",
+      "interpret": "date"
+    },
+    "ended": {
+      "displayName": "Ended?"
+    }
+  }
+}

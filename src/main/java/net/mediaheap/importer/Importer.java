@@ -10,6 +10,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
 
 public class Importer {
     private Extractor extractor = MimeExtractor.getGlobal();
@@ -58,7 +59,7 @@ public class Importer {
         file.setSha512Hash(hashes.sha512);
         file.setMd5Hash(hashes.md5);
         file.setFileType(mimeType);
-        getExtractor().extractTagsFrom(file);
+        getExtractor().extractTagsFrom(file, Collections.emptyList());
         return file;
     }
 

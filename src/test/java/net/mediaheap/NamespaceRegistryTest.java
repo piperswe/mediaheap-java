@@ -20,6 +20,15 @@ class NamespaceRegistryTest {
         registry.registerBuiltin();
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/id3/v1");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/id3/v2");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/album");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/album-artist");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/artist");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/original-album");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/original-artist");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/recording");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/release-group");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track/work");
+        assertBuiltinExists(registry, "https://schemas.mediaheap.net/musicbrainz/track");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/flac");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/m4a");
         assertBuiltinExists(registry, "https://schemas.mediaheap.net/ogg");

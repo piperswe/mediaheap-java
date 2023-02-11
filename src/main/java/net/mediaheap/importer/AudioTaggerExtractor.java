@@ -17,6 +17,15 @@ import java.util.Iterator;
 import java.util.List;
 
 public class AudioTaggerExtractor implements Extractor {
+    public static final String[] AUDIO_NAMESPACES = new String[] {
+            "https://schemas.mediaheap.net/id3/v1",
+            "https://schemas.mediaheap.net/id3/v2",
+            "https://schemas.mediaheap.net/flac",
+            "https://schemas.mediaheap.net/m4a",
+            "https://schemas.mediaheap.net/ogg",
+            "https://schemas.mediaheap.net/wav"
+    };
+
     private static final String COPYRIGHT_SYMBOL = String.valueOf((char) 0xa9);
 
     private final String ns;
@@ -30,7 +39,6 @@ public class AudioTaggerExtractor implements Extractor {
             for (Iterator<TagField> it = fileTag.getFields(); it.hasNext(); ) {
                 var field = it.next();
                 if (field instanceof TagTextField textField) {
-                    System.out.printf("id %s%n", field.getId());
                     tags.add(new MediaHeapTag(file, namespace, field.getId().replace(COPYRIGHT_SYMBOL, "_c"), textField.getContent()));
                 }
             }
@@ -38,7 +46,7 @@ public class AudioTaggerExtractor implements Extractor {
     }
 
     @Override
-    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file) throws IOException {
+    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException {
         try {
             var audioFile = AudioFileIO.read(file.getFile());
             List<MediaHeapTag> tags = new ArrayList<>();

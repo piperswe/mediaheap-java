@@ -1,5 +1,7 @@
 package net.mediaheap.importer;
 
+import net.mediaheap.musicbrainz.MockMusicbrainzClient;
+import net.mediaheap.musicbrainz.MusicbrainzClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,7 @@ public class MimeExtractorTest {
     @BeforeEach
     public void setUp() {
         extractor = new MimeExtractor();
+        extractor.setMusicbrainzExtractor(new MusicbrainzExtractor(new MockMusicbrainzClient()));
         extractor.registerBuiltinExtractors();
     }
 
@@ -29,7 +32,7 @@ public class MimeExtractorTest {
 
     @Test
     void testFlac() throws IOException {
-        var tags = tagsFromTestFile(AudioTaggerExtractorTest.FLAC_EXTRACTOR, "flac/filled_tags.flac");
+        var tags = tagsFromTestFile(extractor, "flac/filled_tags.flac");
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "TITLE", "Title");
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "ARTIST", "Artist");
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "ALBUM", "Album");
@@ -44,7 +47,7 @@ public class MimeExtractorTest {
 
     @Test
     void testFilledOgg() throws IOException {
-        var tags = tagsFromTestFile(AudioTaggerExtractorTest.OGG_EXTRACTOR, "ogg/filled_tags.ogg");
+        var tags = tagsFromTestFile(extractor, "ogg/filled_tags.ogg");
         assertHasTag(AudioTaggerExtractorTest.OGG_NS, tags, "TITLE", "Title");
         assertHasTag(AudioTaggerExtractorTest.OGG_NS, tags, "ARTIST", "Artist");
         assertHasTag(AudioTaggerExtractorTest.OGG_NS, tags, "ALBUM", "Album");
@@ -59,7 +62,7 @@ public class MimeExtractorTest {
 
     @Test
     void testFilledWav() throws IOException {
-        var tags = tagsFromTestFile(AudioTaggerExtractorTest.WAV_EXTRACTOR, "wav/filled_tags.wav");
+        var tags = tagsFromTestFile(extractor, "wav/filled_tags.wav");
         assertHasTag(AudioTaggerExtractorTest.WAV_NS, tags, "TIT2", "Title");
         assertHasTag(AudioTaggerExtractorTest.WAV_NS, tags, "TPE1", "Artist");
         assertHasTag(AudioTaggerExtractorTest.WAV_NS, tags, "TALB", "Album");
@@ -74,7 +77,7 @@ public class MimeExtractorTest {
 
     @Test
     void testFilledM4a() throws IOException {
-        var tags = tagsFromTestFile(AudioTaggerExtractorTest.M4A_EXTRACTOR, "m4a/filled_tags.m4a");
+        var tags = tagsFromTestFile(extractor, "m4a/filled_tags.m4a");
         assertHasTag(AudioTaggerExtractorTest.M4A_NS, tags, "_cnam", "Title");
         assertHasTag(AudioTaggerExtractorTest.M4A_NS, tags, "_cART", "Artist");
         assertHasTag(AudioTaggerExtractorTest.M4A_NS, tags, "_calb", "Album");
@@ -85,5 +88,18 @@ public class MimeExtractorTest {
         assertHasTag(AudioTaggerExtractorTest.M4A_NS, tags, "_cwrt", "Composer");
         assertHasTag(AudioTaggerExtractorTest.M4A_NS, tags, "_cday", "2023");
         assertHasTag(AudioTaggerExtractorTest.M4A_NS, tags, "trkn", "1");
+    }
+
+    @Test
+    void testMusicbrainz() throws IOException {
+        var tags = tagsFromTestFile(extractor, "call_me_what_you_like.flac");
+        assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "MUSICBRAINZ_ARTISTID", "deefd67b-c917-4b0d-ab48-c5af7f92cd82");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/album", tags, "title", "Call Me What You Like");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/album-artist", tags, "name", "Lovejoy");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/artist", tags, "name", "Lovejoy");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/recording", tags, "title", "Call Me What You Like");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/release-group", tags, "title", "Call Me What You Like");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/work", tags, "title", "Call Me What You Like");
+        assertHasTag("https://schemas.mediaheap.net/musicbrainz/track", tags, "number", "1");
     }
 }

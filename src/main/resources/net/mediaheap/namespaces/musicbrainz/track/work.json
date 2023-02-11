@@ -1,0 +1,24 @@
+{
+  "displayName": "MusicBrainz Track - Work",
+  "uri": "https://schemas.mediaheap.net/musicbrainz/track/work",
+  "keys": {
+    "fetched": {
+      "displayName": "Date Fetched from MusicBrainz",
+      "interpret": "date"
+    },
+    "id": {
+      "displayName": "Work MusicBrainz Identifier (MBID)",
+      "link": "https://musicbrainz.org/work/{}"
+    },
+    "title": {
+      "displayName": "Title"
+    },
+    "language": {
+      "displayName": "Language",
+      "interpret": "languageCode"
+    },
+    "iswc": {
+      "displayName": "ISWC"
+    }
+  }
+}

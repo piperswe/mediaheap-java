@@ -6,6 +6,10 @@ plugins {
 group 'net.mediaheap'
 version '1.0-SNAPSHOT'
 
+tasks.withType(JavaCompile).configureEach {
+    options.release.set(17)
+}
+
 repositories {
     mavenCentral()
 }
@@ -15,6 +19,8 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
 
     implementation group: 'net.jthink', name: 'jaudiotagger', version: '3.0.1'
+    implementation group: 'info.schnatterer.musicbrainzws2-java', name: 'musicbrainzws2-java', version: '3.2.0'
+
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'

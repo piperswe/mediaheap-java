@@ -1,6 +1,6 @@
 package net.mediaheap.model;
 
-import java.util.Objects;
+import java.util.*;
 
 public class MediaHeapTag {
     private int id;
@@ -16,7 +16,8 @@ public class MediaHeapTag {
         this.fileId = fileId;
         this.namespace = Objects.requireNonNull(namespace);
         this.key = Objects.requireNonNull(key);
-        this.value = Objects.requireNonNull(value);
+        // TODO: add Objects.requireNonNull
+        this.value = value;
     }
 
     public MediaHeapTag(MediaHeapFile file, String namespace, String key, String value) {
@@ -61,5 +62,31 @@ public class MediaHeapTag {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public static String findTagValue(Iterable<MediaHeapTag> tags, String namespace, String key) {
+        for (var tag : tags) {
+            if (tag.getNamespace().equals(namespace) && tag.getKey().equalsIgnoreCase(key)) {
+                return tag.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static String findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Set<String> namespaces, String key) {
+        for (var tag : tags) {
+            if (namespaces.contains(tag.getNamespace()) && tag.getKey().equalsIgnoreCase(key)) {
+                return tag.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static String findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Collection<String> namespaces, String key) {
+        return findTagValueInNamespaces(tags, new HashSet<>(namespaces), key);
+    }
+
+    public static String findTagValueInNamespaces(Iterable<MediaHeapTag> tags, String[] namespaces, String key) {
+        return findTagValueInNamespaces(tags, Arrays.asList(namespaces), key);
     }
 }

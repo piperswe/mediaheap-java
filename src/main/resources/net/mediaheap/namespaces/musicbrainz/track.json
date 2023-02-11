@@ -1,0 +1,21 @@
+{
+  "displayName": "MusicBrainz Track",
+  "uri": "https://schemas.mediaheap.net/musicbrainz/track",
+  "keys": {
+    "fetched": {
+      "displayName": "Date Fetched from MusicBrainz",
+      "interpret": "date"
+    },
+    "id": {
+      "displayName": "Track MusicBrainz Identifier (MBID)"
+    },
+    "position": {
+      "displayName": "Position",
+      "interpret": "number"
+    },
+    "number": {
+      "displayName": "Number",
+      "interpret": "number"
+    }
+  }
+}

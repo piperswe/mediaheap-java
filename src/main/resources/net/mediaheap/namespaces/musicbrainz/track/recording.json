@@ -1,0 +1,25 @@
+{
+  "displayName": "MusicBrainz Track - Recording",
+  "uri": "https://schemas.mediaheap.net/musicbrainz/track/recording",
+  "keys": {
+    "fetched": {
+      "displayName": "Date Fetched from MusicBrainz",
+      "interpret": "date"
+    },
+    "id": {
+      "displayName": "Recording MusicBrainz Identifier (MBID)",
+      "link": "https://musicbrainz.org/recording/{}"
+    },
+    "title": {
+      "displayName": "Title"
+    },
+    "length": {
+      "displayName": "Length",
+      "interpret": "seconds"
+    },
+    "first-release-date": {
+      "displayName": "First Release Date",
+      "interpret": "date"
+    }
+  }
+}

@@ -4,6 +4,7 @@ import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +16,7 @@ public class TestHelpers {
         var path = "./src/test/resources/net/mediaheap/importer/" + filename;
         file.setPath(path);
         file.setFileType(Importer.getPathMimeType(path));
-        return extractor.extractTagsFrom(file);
+        return extractor.extractTagsFrom(file, Collections.emptyList());
     }
 
     public static void assertHasTag(String namespace, List<MediaHeapTag> tags, String key, String value) {

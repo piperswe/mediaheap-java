@@ -26,6 +26,21 @@
             "description": "A template for building a link from the value of a tag for this key - {} will be replaced with the value",
             "type": "string",
             "pattern": "\\{\\}"
+          },
+          "interpret": {
+            "description": "Data type or units to interpret this numerical value as",
+            "type": "string",
+            "default": "string",
+            "enum": [
+              "string",
+              "number",
+              "date",
+              "time",
+              "datetime",
+              "seconds",
+              "countryCode",
+              "languageCode"
+            ]
           }
         }
       }

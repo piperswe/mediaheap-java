@@ -1,0 +1,24 @@
+{
+  "displayName": "MusicBrainz Track - Release Group",
+  "uri": "https://schemas.mediaheap.net/musicbrainz/track/release-group",
+  "keys": {
+    "fetched": {
+      "displayName": "Date Fetched from MusicBrainz",
+      "interpret": "date"
+    },
+    "id": {
+      "displayName": "Release Group MusicBrainz Identifier (MBID)",
+      "link": "https://musicbrainz.org/release-group/{}"
+    },
+    "title": {
+      "displayName": "Title"
+    },
+    "first-release-date": {
+      "displayName": "First Release Date",
+      "interpret": "date"
+    },
+    "primary-type": {
+      "displayName": "Primary Type"
+    }
+  }
+}

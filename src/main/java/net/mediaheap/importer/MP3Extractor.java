@@ -19,7 +19,7 @@ public class MP3Extractor implements Extractor {
     static final String V2NS = "https://schemas.mediaheap.net/id3/v2";
 
     @Override
-    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file) throws IOException {
+    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException {
         try {
             var audioFile = AudioFileIO.read(file.getFile());
             if (!(audioFile instanceof MP3File mp3)) {
