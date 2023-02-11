@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'application'
     id 'io.freefair.lombok' version '6.6.1'
     id 'org.flywaydb.flyway' version '9.8.1'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -11,6 +12,10 @@ version '1.0-SNAPSHOT'
 
 tasks.withType(JavaCompile).configureEach {
     options.release.set(17)
+}
+
+application {
+    mainClass = 'net.mediaheap.Main'
 }
 
 repositories {
@@ -45,6 +50,8 @@ publishing {
             version = '1.0-SNAPSHOT'
 
             from components.java
+
+            artifact distZip
         }
     }
     repositories {
