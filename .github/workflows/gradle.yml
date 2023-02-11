@@ -41,9 +41,9 @@ jobs:
           report_paths: '**/build/test-results/test/TEST-*.xml'
       - uses: actions/upload-artifact@v3
         with:
-          name: libs
+          name: libs-${{ matrix.jdk }}
           path: build/libs
       - uses: actions/upload-artifact@v3
         with:
-          name: reports
+          name: reports-${{ matrix.jdk }}
           path: build/reports
