@@ -1,0 +1,17 @@
+name: Dependency Reporting
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  gradle:
+    name: Gradle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Gradle Dependency Submission
+        uses: mikepenz/gradle-dependency-submission@v0.8.4
