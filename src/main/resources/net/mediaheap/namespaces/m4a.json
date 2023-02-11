@@ -1,0 +1,39 @@
+{
+  "displayName": "M4A Tags",
+  "uri": "https://schemas.mediaheap.net/m4a",
+  "keys": {
+    "_cnam": {
+      "displayName": "Track Title"
+    },
+    "_cART": {
+      "displayName": "Track Artist"
+    },
+    "_calb": {
+      "displayName": "Album"
+    },
+    "_cday": {
+      "displayName": "Year"
+    },
+    "_ccmt": {
+      "displayName": "Comment"
+    },
+    "trkn": {
+      "displayName": "Track Number"
+    },
+    "gnre": {
+      "displayName": "Genre"
+    },
+    "disk": {
+      "displayName": "Disc Number"
+    },
+    "aART": {
+      "displayName": "Album Artist"
+    },
+    "_cwrt": {
+      "displayName": "Composer"
+    },
+    "_ctoo": {
+      "displayName": "Tool"
+    }
+  }
+}

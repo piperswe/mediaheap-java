@@ -1,0 +1,27 @@
+{
+  "displayName": "ID3v1 Tags",
+  "uri": "https://schemas.mediaheap.net/id3/v1",
+  "keys": {
+    "TIT2": {
+      "displayName": "Track Title"
+    },
+    "TPE1": {
+      "displayName": "Track Artist"
+    },
+    "TALB": {
+      "displayName": "Album"
+    },
+    "TYER": {
+      "displayName": "Year"
+    },
+    "COMM": {
+      "displayName": "Comment"
+    },
+    "TRCK": {
+      "displayName": "Track Number"
+    },
+    "TCON": {
+      "displayName": "Genre"
+    }
+  }
+}

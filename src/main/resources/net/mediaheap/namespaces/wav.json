@@ -1,0 +1,36 @@
+{
+  "displayName": "WAV Tags",
+  "uri": "https://schemas.mediaheap.net/wav",
+  "keys": {
+    "TIT2": {
+      "displayName": "Track Title"
+    },
+    "TPE1": {
+      "displayName": "Track Artist"
+    },
+    "TALB": {
+      "displayName": "Album"
+    },
+    "TYER": {
+      "displayName": "Year"
+    },
+    "COMM": {
+      "displayName": "Comment"
+    },
+    "TRCK": {
+      "displayName": "Track Number"
+    },
+    "TCON": {
+      "displayName": "Genre"
+    },
+    "TPOS": {
+      "displayName": "Disc Number"
+    },
+    "TPE2": {
+      "displayName": "Album Artist"
+    },
+    "TCOM": {
+      "displayName": "Composer"
+    }
+  }
+}

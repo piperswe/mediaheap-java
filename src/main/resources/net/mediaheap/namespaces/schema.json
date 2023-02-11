@@ -1,0 +1,37 @@
+{
+  "$id": "https://schema.mediaheap.net/schema.json",
+  "description": "A schema definition for a mediaheap namespace",
+  "type": "object",
+  "properties": {
+    "displayName": {
+      "description": "The name of this namespace, as should be displayed to users",
+      "type": "string"
+    },
+    "uri": {
+      "description": "The URI at which this namespace JSON can be found, and tags referring to this namespace should use as the namespace identifier",
+      "type": "string"
+    },
+    "keys": {
+      "description": "The keys that can belong to this namespace",
+      "type": "object",
+      "additionalProperties": {
+        "description": "A tag key",
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "description": "The name of this key, as should be displayed to users",
+            "type": "string"
+          },
+          "link": {
+            "description": "A template for building a link from the value of a tag for this key - {} will be replaced with the value",
+            "type": "string",
+            "pattern": "\\{\\}"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "uri"
+  ]
+}

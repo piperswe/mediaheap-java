@@ -1,0 +1,36 @@
+{
+  "displayName": "Ogg Tags",
+  "uri": "https://schemas.mediaheap.net/ogg",
+  "keys": {
+    "TITLE": {
+      "displayName": "Title"
+    },
+    "ARTIST": {
+      "displayName": "Artist"
+    },
+    "ALBUM": {
+      "displayName": "Album"
+    },
+    "GENRE": {
+      "displayName": "Genre"
+    },
+    "COMMENT": {
+      "displayName": "Comment"
+    },
+    "ALBUMARTIST": {
+      "displayName": "Album Artist"
+    },
+    "COMPOSER": {
+      "displayName": "Composer"
+    },
+    "DISCNUMBER": {
+      "displayName": "Disc Number"
+    },
+    "DATE": {
+      "displayName": "Date"
+    },
+    "TRACKNUMBER": {
+      "displayName": "Track Number"
+    }
+  }
+}
