@@ -1,6 +1,7 @@
 package net.mediaheap;
 
 import com.google.gson.Gson;
+import lombok.NonNull;
 import net.mediaheap.namespace.NamespaceSchema;
 
 import java.io.IOException;
@@ -13,19 +14,19 @@ public class NamespaceRegistry {
     private static final Gson gson = new Gson();
     private final Map<String, NamespaceSchema> registered = new HashMap<>();
 
-    public static NamespaceRegistry getGlobal() {
+    public static @NonNull NamespaceRegistry getGlobal() {
         return global;
     }
 
-    public void register(NamespaceSchema namespaceSchema) {
+    public void register(@NonNull NamespaceSchema namespaceSchema) {
         registered.put(namespaceSchema.getUri(), namespaceSchema);
     }
 
-    public NamespaceSchema getSchema(String uri) {
+    public NamespaceSchema getSchema(@NonNull String uri) {
         return registered.get(uri);
     }
 
-    private void registerBuiltinFromResource(String path) throws IOException {
+    private void registerBuiltinFromResource(@NonNull String path) throws IOException {
         path = "/net/mediaheap/namespaces/" + path;
         var resource = getClass().getResource(path);
         assert resource != null;

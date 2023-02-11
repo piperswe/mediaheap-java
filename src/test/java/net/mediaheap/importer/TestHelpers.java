@@ -12,10 +12,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestHelpers {
     public static List<MediaHeapTag> tagsFromTestFile(Extractor extractor, String filename) throws IOException {
-        var file = new MediaHeapFile();
         var path = "./src/test/resources/net/mediaheap/importer/" + filename;
-        file.setPath(path);
-        file.setFileType(Importer.getPathMimeType(path));
+        var file = MediaHeapFile.of(path, "", "", "", Importer.getPathMimeType(path));
         return extractor.extractTagsFrom(file, Collections.emptyList());
     }
 

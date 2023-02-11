@@ -1,6 +1,9 @@
 package net.mediaheap.importer;
 
 import com.google.common.io.BaseEncoding;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import net.mediaheap.model.MediaHeapFile;
 
 import java.io.BufferedInputStream;
@@ -13,21 +16,16 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 
 public class Importer {
+    @Getter
+    @Setter
+    @NonNull
     private Extractor extractor = MimeExtractor.getGlobal();
 
-    public static String getPathMimeType(String path) throws IOException {
+    public static String getPathMimeType(@NonNull String path) throws IOException {
         return Files.probeContentType(FileSystems.getDefault().getPath(path));
     }
 
-    public Extractor getExtractor() {
-        return extractor;
-    }
-
-    public void setExtractor(Extractor extractor) {
-        this.extractor = extractor;
-    }
-
-    private Hashes hashFile(String path) throws IOException {
+    private @NonNull Hashes hashFile(@NonNull String path) throws IOException {
         try {
             var buffer = new byte[8192];
             int count;
@@ -51,19 +49,18 @@ public class Importer {
         }
     }
 
-    public MediaHeapFile importFromWithMimeType(String path, String mimeType) throws IOException {
-        MediaHeapFile file = new MediaHeapFile();
-        file.setPath(path);
+    public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, String mimeType) throws IOException {
         var hashes = hashFile(path);
-        file.setSha256Hash(hashes.sha256);
-        file.setSha512Hash(hashes.sha512);
-        file.setMd5Hash(hashes.md5);
-        file.setFileType(mimeType);
+        var fileType = "application/octet-stream";
+        if (mimeType != null && !"".equals(mimeType)) {
+            fileType = mimeType;
+        }
+        var file = MediaHeapFile.of(path, hashes.sha256, hashes.sha512, hashes.md5, fileType);
         getExtractor().extractTagsFrom(file, Collections.emptyList());
         return file;
     }
 
-    public MediaHeapFile importFrom(String path) throws IOException {
+    public @NonNull MediaHeapFile importFrom(@NonNull String path) throws IOException {
         var contentType = getPathMimeType(path);
         return importFromWithMimeType(path, contentType);
     }

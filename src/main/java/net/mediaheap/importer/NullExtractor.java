@@ -1,5 +1,6 @@
 package net.mediaheap.importer;
 
+import lombok.NonNull;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class NullExtractor implements Extractor {
     @Override
-    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException {
+    public @NonNull List<MediaHeapTag> extractTagsFrom(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws IOException {
         return Collections.emptyList();
     }
 }

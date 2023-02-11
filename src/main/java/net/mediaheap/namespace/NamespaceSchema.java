@@ -1,7 +1,10 @@
 package net.mediaheap.namespace;
 
+import lombok.Data;
+
 import java.util.Map;
 
+@Data
 public class NamespaceSchema {
     private String displayName;
     private String uri;

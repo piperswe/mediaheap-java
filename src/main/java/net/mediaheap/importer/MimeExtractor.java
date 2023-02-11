@@ -1,26 +1,30 @@
 package net.mediaheap.importer;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.extern.flogger.Flogger;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
 import net.mediaheap.musicbrainz.http.HTTPMusicbrainzClient;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+@Flogger
 public class MimeExtractor implements Extractor {
-    private static final Logger logger = Logger.getLogger("MimeExtractor");
-
     private static final MimeExtractor global = new MimeExtractor();
-    private Extractor musicbrainzExtractor = new MusicbrainzExtractor(new HTTPMusicbrainzClient());
     private final Map<String, List<Extractor>> extractors = new HashMap<>();
+    @Getter
+    @Setter
+    @NonNull
+    private Extractor musicbrainzExtractor = new MusicbrainzExtractor(new HTTPMusicbrainzClient());
 
-    public static MimeExtractor getGlobal() {
+    public static @NonNull MimeExtractor getGlobal() {
         return global;
     }
 
-    public void registerExtractors(String mimeType, Extractor... newExtractors) {
+    public void registerExtractors(@NonNull String mimeType, @NonNull Extractor... newExtractors) {
         if (!extractors.containsKey(mimeType)) {
             extractors.put(mimeType, new ArrayList<>());
         }
@@ -45,24 +49,20 @@ public class MimeExtractor implements Extractor {
         registerExtractors("audio/x-wav", wav, musicbrainz);
     }
 
-    public List<Extractor> getExtractors(String mimeType) {
+    public @NonNull List<Extractor> getExtractors(String mimeType) {
         return extractors.getOrDefault(mimeType, Collections.emptyList());
     }
 
     @Override
-    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException {
+    public @NonNull List<MediaHeapTag> extractTagsFrom(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws IOException {
         var extractors = getExtractors(file.getFileType());
         if (extractors.isEmpty()) {
-            logger.log(Level.WARNING, String.format("No extractors for file type %s!", file.getFileType()));
+            log.atWarning().log("No extractors for file type %s!", file.getFileType());
         }
         List<MediaHeapTag> tags = new ArrayList<>();
         for (var extractor : extractors) {
             tags.addAll(extractor.extractTagsFrom(file, tags));
         }
         return tags;
-    }
-
-    public void setMusicbrainzExtractor(Extractor musicbrainzExtractor) {
-        this.musicbrainzExtractor = musicbrainzExtractor;
     }
 }

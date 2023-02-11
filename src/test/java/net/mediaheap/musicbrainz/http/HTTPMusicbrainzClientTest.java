@@ -2,9 +2,8 @@ package net.mediaheap.musicbrainz.http;
 
 import net.mediaheap.musicbrainz.MusicbrainzClient;
 import org.junit.jupiter.api.Test;
-import org.musicbrainz.MBWS2Exception;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // These tests will become very fragile if we test specifics.
 // Just test names to make sure the requests are well-formed.

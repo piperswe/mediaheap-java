@@ -1,5 +1,7 @@
 package net.mediaheap.importer;
 
+import lombok.Cleanup;
+import lombok.NonNull;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
 import net.mediaheap.musicbrainz.MusicbrainzClient;
@@ -12,19 +14,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class MusicbrainzExtractor implements Extractor {
+    @NonNull
     private final MusicbrainzClient client;
 
-    public MusicbrainzExtractor(MusicbrainzClient client) {
+    public MusicbrainzExtractor(@NonNull MusicbrainzClient client) {
         this.client = client;
     }
 
-    public static class MusicbrainzException extends IOException {
-        public MusicbrainzException(Throwable cause) {
-            super(cause);
-        }
-    }
-
-    private List<MediaHeapTag> extractAlbum(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractAlbum(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_albumid");
         if (id == null) {
             return Collections.emptyList();
@@ -36,7 +33,7 @@ public class MusicbrainzExtractor implements Extractor {
         return release.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album");
     }
 
-    private List<MediaHeapTag> extractAlbumArtist(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractAlbumArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_albumartistid");
         if (id == null) {
             return Collections.emptyList();
@@ -48,7 +45,7 @@ public class MusicbrainzExtractor implements Extractor {
         return artist.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album-artist");
     }
 
-    private List<MediaHeapTag> extractArtist(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_artistid");
         if (id == null) {
             return Collections.emptyList();
@@ -60,7 +57,7 @@ public class MusicbrainzExtractor implements Extractor {
         return artist.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/artist");
     }
 
-    private List<MediaHeapTag> extractOriginalAlbum(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractOriginalAlbum(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_originalalbumid");
         if (id == null) {
             return Collections.emptyList();
@@ -72,7 +69,7 @@ public class MusicbrainzExtractor implements Extractor {
         return release.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-album");
     }
 
-    private List<MediaHeapTag> extractOriginalArtist(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractOriginalArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_originalartistid");
         if (id == null) {
             return Collections.emptyList();
@@ -84,7 +81,7 @@ public class MusicbrainzExtractor implements Extractor {
         return artist.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-artist");
     }
 
-    private List<MediaHeapTag> extractRecording(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractRecording(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_recordingid");
         if (id == null) {
             return Collections.emptyList();
@@ -96,7 +93,7 @@ public class MusicbrainzExtractor implements Extractor {
         return recording.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/recording");
     }
 
-    private List<MediaHeapTag> extractReleaseGroup(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractReleaseGroup(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_releasegroupid");
         if (id == null) {
             return Collections.emptyList();
@@ -108,7 +105,7 @@ public class MusicbrainzExtractor implements Extractor {
         return releaseGroup.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/release-group");
     }
 
-    private List<MediaHeapTag> extractWork(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractWork(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_workid");
         if (id == null) {
             return Collections.emptyList();
@@ -120,7 +117,7 @@ public class MusicbrainzExtractor implements Extractor {
         return work.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/work");
     }
 
-    private List<MediaHeapTag> extractTrack(MediaHeapFile file, List<MediaHeapTag> existingTags) throws Exception {
+    private @NonNull List<MediaHeapTag> extractTrack(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var trackId = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_trackid");
         if (trackId == null) {
             return Collections.emptyList();
@@ -137,9 +134,9 @@ public class MusicbrainzExtractor implements Extractor {
     }
 
     @Override
-    public List<MediaHeapTag> extractTagsFrom(MediaHeapFile file, List<MediaHeapTag> existingTags) throws IOException {
-        var scope = new ScheduledThreadPoolExecutor(8);
+    public @NonNull List<MediaHeapTag> extractTagsFrom(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws IOException {
         try {
+            @Cleanup("shutdown") var scope = new ScheduledThreadPoolExecutor(8);
             var album = scope.submit(() -> extractAlbum(file, existingTags));
             var albumArtist = scope.submit(() -> extractAlbumArtist(file, existingTags));
             var artist = scope.submit(() -> extractArtist(file, existingTags));
@@ -163,8 +160,12 @@ public class MusicbrainzExtractor implements Extractor {
             return tags;
         } catch (ExecutionException | InterruptedException e) {
             throw new MusicbrainzException(e);
-        } finally {
-            scope.shutdown();
+        }
+    }
+
+    public static class MusicbrainzException extends IOException {
+        public MusicbrainzException(Throwable cause) {
+            super(cause);
         }
     }
 }

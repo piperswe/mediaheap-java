@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id "io.freefair.lombok" version "6.6.1"
 }
 
 group 'net.mediaheap'
@@ -17,10 +18,12 @@ repositories {
 dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    implementation group: 'com.google.flogger', name: 'flogger', version: '0.7.4'
+    implementation group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.7.4'
+
 
     implementation group: 'net.jthink', name: 'jaudiotagger', version: '3.0.1'
     implementation group: 'info.schnatterer.musicbrainzws2-java', name: 'musicbrainzws2-java', version: '3.2.0'
-
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'

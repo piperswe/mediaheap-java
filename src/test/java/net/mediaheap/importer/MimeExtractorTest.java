@@ -1,7 +1,6 @@
 package net.mediaheap.importer;
 
 import net.mediaheap.musicbrainz.MockMusicbrainzClient;
-import net.mediaheap.musicbrainz.MusicbrainzClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +8,7 @@ import java.io.IOException;
 
 import static net.mediaheap.importer.TestHelpers.assertHasTag;
 import static net.mediaheap.importer.TestHelpers.tagsFromTestFile;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MimeExtractorTest {
     private MimeExtractor extractor;
@@ -101,5 +101,11 @@ public class MimeExtractorTest {
         assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/release-group", tags, "title", "Call Me What You Like");
         assertHasTag("https://schemas.mediaheap.net/musicbrainz/track/work", tags, "title", "Call Me What You Like");
         assertHasTag("https://schemas.mediaheap.net/musicbrainz/track", tags, "number", "1");
+    }
+
+    @Test
+    void testNoExtractor() throws IOException {
+        var tags = tagsFromTestFile(extractor, "example.aup3");
+        assertEquals(0, tags.size());
     }
 }

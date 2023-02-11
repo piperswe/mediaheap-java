@@ -1,5 +1,8 @@
 package net.mediaheap.namespace;
 
+import lombok.Data;
+
+@Data
 public class KeySchema {
     private String displayName;
     private String link;
