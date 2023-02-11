@@ -34,6 +34,15 @@ test {
 }
 
 publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'net.mediaheap'
+            artifactId = 'mediaheap-java'
+            version = '1.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
     repositories {
         maven {
             name = "github"
