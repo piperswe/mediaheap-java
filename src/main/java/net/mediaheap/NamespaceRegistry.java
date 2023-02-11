@@ -27,7 +27,7 @@ public class NamespaceRegistry {
     }
 
     private void registerBuiltinFromResource(@NonNull String path) throws IOException {
-        path = "/net/mediaheap/namespaces/" + path;
+        path = "namespace/schemas/" + path;
         var resource = getClass().getResource(path);
         assert resource != null;
         NamespaceSchema namespace;
