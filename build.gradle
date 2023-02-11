@@ -1,7 +1,8 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id "io.freefair.lombok" version "6.6.1"
+    id 'io.freefair.lombok' version '6.6.1'
+    id 'org.flywaydb.flyway' version '9.8.1'
 }
 
 group 'net.mediaheap'
@@ -21,6 +22,8 @@ dependencies {
     implementation group: 'com.google.flogger', name: 'flogger', version: '0.7.4'
     implementation group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.7.4'
 
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.40.1.0'
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.8.3'
 
     implementation group: 'net.jthink', name: 'jaudiotagger', version: '3.0.1'
     implementation group: 'info.schnatterer.musicbrainzws2-java', name: 'musicbrainzws2-java', version: '3.2.0'
@@ -60,4 +63,9 @@ if (hasProperty('buildScan')) {
         termsOfServiceUrl = 'https://gradle.com/terms-of-service'
         termsOfServiceAgree = 'yes'
     }
+}
+
+flyway {
+    url = "jdbc:sqlite:${System.getProperty('user.dir')}/mediaheap.sqlite"
+    locations = ["filesystem:${System.getProperty('user.dir')}/src/main/resources/net/mediaheap/database/migrations"]
 }
