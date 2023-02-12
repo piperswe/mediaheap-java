@@ -1,6 +1,8 @@
 package net.mediaheap.musicbrainz.http;
 
+import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
 import lombok.Cleanup;
 import lombok.NonNull;
@@ -17,7 +19,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class HTTPMusicbrainzCacheLoader<T> extends CacheLoader<String, Optional<T>> {
+class HTTPMusicbrainzRequester<T> extends CacheLoader<String, Optional<T>> {
     @NonNull
     private final Function<String, String> urlGenerator;
     @NonNull
@@ -27,7 +29,7 @@ class HTTPMusicbrainzCacheLoader<T> extends CacheLoader<String, Optional<T>> {
     @NonNull
     private final Class<T> klass;
 
-    HTTPMusicbrainzCacheLoader(@NonNull Function<String, String> urlGenerator, @NonNull Supplier<HttpClient> getHttpClient, @NonNull Supplier<Gson> getGson, @NonNull Class<T> klass) {
+    private HTTPMusicbrainzRequester(@NonNull Function<String, String> urlGenerator, @NonNull Supplier<HttpClient> getHttpClient, @NonNull Supplier<Gson> getGson, @NonNull Class<T> klass) {
         this.urlGenerator = urlGenerator;
         this.getHttpClient = getHttpClient;
         this.getGson = getGson;
@@ -60,5 +62,13 @@ class HTTPMusicbrainzCacheLoader<T> extends CacheLoader<String, Optional<T>> {
     public @NonNull Optional<T> load(@NonNull String id) throws Exception {
         var url = urlGenerator.apply(id);
         return request(url);
+    }
+
+    static <T> @NonNull LoadingCache<String, Optional<T>> createCache(@NonNull Function<String, String> urlGenerator, @NonNull Supplier<HttpClient> getHttpClient, @NonNull Supplier<Gson> getGson, @NonNull Class<T> klass) {
+        return new HTTPMusicbrainzRequester<>(urlGenerator, getHttpClient, getGson, klass).toLoadingCache();
+    }
+
+    private @NonNull LoadingCache<String, Optional<T>> toLoadingCache() {
+        return CacheBuilder.newBuilder().maximumSize(100).build(this);
     }
 }
