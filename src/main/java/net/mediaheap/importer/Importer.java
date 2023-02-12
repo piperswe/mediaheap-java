@@ -9,6 +9,7 @@ import net.mediaheap.database.DatabaseConnection;
 import net.mediaheap.model.MediaHeapFile;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -63,6 +64,7 @@ public class Importer {
     }
 
     public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, @NonNull Optional<String> mimeType) throws IOException, SQLException {
+        path = new File(path).getCanonicalPath();
         var hashes = hashFile(path);
         var fileType = mimeType.orElse("application/octet-stream");
         var file = MediaHeapFile.of(path, hashes.sha256, hashes.sha512, hashes.md5, fileType);
