@@ -3,6 +3,7 @@ package net.mediaheap.musicbrainz.http;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.RateLimiter;
 import com.google.gson.Gson;
 import lombok.Cleanup;
 import lombok.NonNull;
@@ -20,6 +21,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 class HTTPMusicbrainzRequester<T> extends CacheLoader<String, Optional<T>> {
+    // MusicBrainz API is limited to 1 request per second per IP. We're setting the limit to
+    // 0.9req/sec so that we don't accidentally exceed it.
+    @NonNull
+    private static final RateLimiter rateLimiter = RateLimiter.create(0.9);
+
     @NonNull
     private final Function<String, String> urlGenerator;
     @NonNull
@@ -47,8 +53,13 @@ class HTTPMusicbrainzRequester<T> extends CacheLoader<String, Optional<T>> {
 
     private @NonNull Optional<T> request(@NonNull String url) throws Exception {
         var request = newHttpRequest(url);
+        rateLimiter.acquire();
         var response = getHttpClient.get().send(request, HttpResponse.BodyHandlers.ofInputStream());
-        if (response.statusCode() == 404) {
+        if (response.statusCode() == 503) {
+            // Re-request since we hit the rate limit
+            // Rate limiter should sleep long enough for us
+            return request(url);
+        } else if (response.statusCode() == 404) {
             return Optional.empty();
         } else if (response.statusCode() >= 300) {
             throw new Exception(String.format("Got status code %d", response.statusCode()));
