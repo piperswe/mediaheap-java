@@ -27,10 +27,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var release = client.getRelease(id);
-        if (release == null) {
-            return Collections.emptyList();
-        }
-        return release.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album");
+        return release.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractAlbumArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -39,10 +36,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var artist = client.getArtist(id);
-        if (artist == null) {
-            return Collections.emptyList();
-        }
-        return artist.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album-artist");
+        return artist.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album-artist")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -51,10 +45,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var artist = client.getArtist(id);
-        if (artist == null) {
-            return Collections.emptyList();
-        }
-        return artist.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/artist");
+        return artist.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/artist")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractOriginalAlbum(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -63,10 +54,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var release = client.getRelease(id);
-        if (release == null) {
-            return Collections.emptyList();
-        }
-        return release.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-album");
+        return release.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-album")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractOriginalArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -75,10 +63,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var artist = client.getArtist(id);
-        if (artist == null) {
-            return Collections.emptyList();
-        }
-        return artist.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-artist");
+        return artist.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-artist")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractRecording(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -87,10 +72,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var recording = client.getRecording(id);
-        if (recording == null) {
-            return Collections.emptyList();
-        }
-        return recording.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/recording");
+        return recording.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/recording")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractReleaseGroup(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -99,10 +81,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var releaseGroup = client.getReleaseGroup(id);
-        if (releaseGroup == null) {
-            return Collections.emptyList();
-        }
-        return releaseGroup.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/release-group");
+        return releaseGroup.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/release-group")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractWork(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -111,10 +90,7 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var work = client.getWork(id);
-        if (work == null) {
-            return Collections.emptyList();
-        }
-        return work.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/work");
+        return work.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/work")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractTrack(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
@@ -127,10 +103,10 @@ public class MusicbrainzExtractor implements Extractor {
             return Collections.emptyList();
         }
         var track = client.getTrack(releaseId, trackId);
-        if (track == null) {
-            return Collections.emptyList();
+        if (track.isEmpty()) {
+            System.err.println("empty");
         }
-        return track.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track");
+        return track.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track")).orElse(Collections.emptyList());
     }
 
     @Override

@@ -15,7 +15,7 @@
     },
     "length": {
       "displayName": "Length",
-      "interpret": "seconds"
+      "interpret": "milliseconds"
     },
     "first-release-date": {
       "displayName": "First Release Date",

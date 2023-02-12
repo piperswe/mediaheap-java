@@ -38,6 +38,7 @@
               "time",
               "datetime",
               "seconds",
+              "milliseconds",
               "countryCode",
               "languageCode"
             ]
