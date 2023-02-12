@@ -3,18 +3,10 @@ package net.mediaheap.musicbrainz.http;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
-import lombok.Cleanup;
 import lombok.NonNull;
 import net.mediaheap.musicbrainz.*;
 
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -22,62 +14,45 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
     final HttpClient client = HttpClient.newHttpClient();
     final Gson gson = new Gson();
     private final LoadingCache<String, Optional<HTTPArtist>> artistCache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
+            .maximumSize(100)
             .build(new HTTPMusicbrainzCacheLoader<>(
                     (id) -> String.format("https://musicbrainz.org/ws/2/artist/%s?fmt=json", id),
-                    HTTPArtist.class,
-                    this
+                    () -> this.client,
+                    () -> this.gson,
+                    HTTPArtist.class
             ));
     private final LoadingCache<String, Optional<HTTPRecording>> recordingCache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
+            .maximumSize(100)
             .build(new HTTPMusicbrainzCacheLoader<>(
                     (id) -> String.format("https://musicbrainz.org/ws/2/recording/%s?fmt=json", id),
-                    HTTPRecording.class,
-                    this
+                    () -> this.client,
+                    () -> this.gson,
+                    HTTPRecording.class
             ));
     private final LoadingCache<String, Optional<HTTPRelease>> releaseCache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
-            .build(new HTTPMusicbrainzCacheLoader<>((id) -> String.format(
-                    "https://musicbrainz.org/ws/2/release/%s?fmt=json&inc=recordings", id),
-                    HTTPRelease.class,
-                    this
+            .maximumSize(100)
+            .build(new HTTPMusicbrainzCacheLoader<>(
+                    (id) -> String.format("https://musicbrainz.org/ws/2/release/%s?fmt=json&inc=recordings", id),
+                    () -> this.client,
+                    () -> this.gson,
+                    HTTPRelease.class
             ));
     private final LoadingCache<String, Optional<HTTPReleaseGroup>> releaseGroupCache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
-            .build(new HTTPMusicbrainzCacheLoader<>((id) -> String.format(
-                    "https://musicbrainz.org/ws/2/release-group/%s?fmt=json", id),
-                    HTTPReleaseGroup.class,
-                    this
+            .maximumSize(100)
+            .build(new HTTPMusicbrainzCacheLoader<>(
+                    (id) -> String.format("https://musicbrainz.org/ws/2/release-group/%s?fmt=json", id),
+                    () -> this.client,
+                    () -> this.gson,
+                    HTTPReleaseGroup.class
             ));
     private final LoadingCache<String, Optional<HTTPWork>> workCache = CacheBuilder.newBuilder()
-            .maximumSize(1000)
-            .build(new HTTPMusicbrainzCacheLoader<>((id) -> String.format(
-                    "https://musicbrainz.org/ws/2/work/%s?fmt=json", id),
-                    HTTPWork.class,
-                    this
+            .maximumSize(100)
+            .build(new HTTPMusicbrainzCacheLoader<>(
+                    (id) -> String.format("https://musicbrainz.org/ws/2/work/%s?fmt=json", id),
+                    () -> this.client,
+                    () -> this.gson,
+                    HTTPWork.class
             ));
-
-    private static @NonNull HttpRequest newHttpRequest(@NonNull String url) throws URISyntaxException {
-        return HttpRequest.newBuilder()
-                .uri(new URI(url))
-                .header("User-Agent", "mediaheap-java ( https://github.com/piperswe/mediaheap-java )")
-                .timeout(Duration.of(10, ChronoUnit.SECONDS))
-                .GET()
-                .build();
-    }
-
-    <T> @NonNull Optional<T> request(@NonNull String url, @NonNull Class<T> klass) throws Exception {
-        var request = newHttpRequest(url);
-        var response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
-        if (response.statusCode() == 404) {
-            return Optional.empty();
-        } else if (response.statusCode() >= 300) {
-            throw new Exception(String.format("Got status code %d", response.statusCode()));
-        }
-        @Cleanup var stream = response.body();
-        @Cleanup var reader = new InputStreamReader(stream);
-        return Optional.of(gson.fromJson(reader, klass));
-    }
 
     @Override
     public @NonNull Optional<Artist> getArtist(@NonNull String id) throws ExecutionException {
