@@ -7,6 +7,7 @@ import net.mediaheap.model.MediaHeapTagListFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Instant;
 import java.util.List;
 
 public class ImportExtractor implements Extractor {
@@ -20,6 +21,7 @@ public class ImportExtractor implements Extractor {
                 .add("sha256", file.getSha256Hash())
                 .add("sha512", file.getSha512Hash())
                 .add("md5", file.getMd5Hash())
+                .add("timestamp", String.valueOf(Instant.now().getEpochSecond()))
                 .build();
     }
 }

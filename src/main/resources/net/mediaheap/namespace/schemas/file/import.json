@@ -17,6 +17,10 @@
     },
     "md5": {
       "displayName": "MD5 Hash"
+    },
+    "timestamp": {
+      "displayName": "Import Timestamp",
+      "interpret": "datetime"
     }
   }
 }
