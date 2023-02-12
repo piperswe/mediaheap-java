@@ -1,0 +1,22 @@
+{
+  "displayName": "Import Data",
+  "uri": "https://schemas.mediaheap.net/file/import",
+  "keys": {
+    "originalPath": {
+      "displayName": "Original Path"
+    },
+    "size": {
+      "displayName": "File Size",
+      "interpret": "bytes"
+    },
+    "sha256": {
+      "displayName": "SHA-256 Hash"
+    },
+    "sha512": {
+      "displayName": "SHA-512 Hash"
+    },
+    "md5": {
+      "displayName": "MD5 Hash"
+    }
+  }
+}

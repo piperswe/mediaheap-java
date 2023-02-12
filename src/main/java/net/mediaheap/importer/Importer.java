@@ -26,6 +26,8 @@ public class Importer {
     @Setter
     @NonNull
     private Extractor extractor = MimeExtractor.getGlobal();
+    @NonNull
+    private final ImportExtractor importExtractor = new ImportExtractor();
 
     public Importer(@NonNull DatabaseConnection db) {
         this.db = db;
@@ -66,6 +68,7 @@ public class Importer {
         var file = MediaHeapFile.of(path, hashes.sha256, hashes.sha512, hashes.md5, fileType);
         file = db.getFiles().insertFile(file);
         var tags = getExtractor().extractTagsFrom(file, Collections.emptyList());
+        tags.addAll(importExtractor.extractTagsFrom(file, tags));
         db.getTags().insertTags(tags);
         return file;
     }

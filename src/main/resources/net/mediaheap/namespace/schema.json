@@ -40,7 +40,8 @@
               "seconds",
               "milliseconds",
               "countryCode",
-              "languageCode"
+              "languageCode",
+              "bytes"
             ]
           }
         }
