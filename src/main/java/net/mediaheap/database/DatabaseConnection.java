@@ -24,7 +24,8 @@ public class DatabaseConnection implements AutoCloseable {
         tags = new TagsTable(this);
     }
 
-    public static @NonNull DatabaseConnection of(@NonNull Connection connection) {
+    public static @NonNull DatabaseConnection of(@NonNull Connection connection) throws SQLException {
+        connection.createStatement().execute("PRAGMA foreign_keys = ON;");
         return new DatabaseConnection(connection);
     }
 

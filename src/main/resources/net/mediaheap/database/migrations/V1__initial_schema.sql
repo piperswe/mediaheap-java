@@ -17,7 +17,11 @@ CREATE TABLE Tag
 
     namespace TEXT    NOT NULL,
     key       TEXT    NOT NULL,
-    value     TEXT    NOT NULL
+    value     TEXT    NOT NULL,
+
+    FOREIGN KEY (fileId) REFERENCES File (id)
 );
 
+CREATE INDEX tag_file_idx ON Tag (fileId);
+CREATE INDEX tag_file_namespace_idx on Tag (fileId, namespace);
 CREATE INDEX tag_file_namespace_key_idx ON Tag (fileId, namespace, key);

@@ -26,8 +26,9 @@ class TagsTableTest {
 
     @Test
     void insertTags() throws SQLException {
+        var file = db.getFiles().insertFile(MediaHeapFile.of("", "", "", "", null));
         db.getTags().insertTags(
-                MediaHeapTagListFactory.start(-1, "ns")
+                MediaHeapTagListFactory.start(file, "ns")
                         .add("hello", "world")
                         .build()
         );
@@ -35,28 +36,16 @@ class TagsTableTest {
 
     @Test
     void getTagsForFile() throws SQLException {
+        var file = db.getFiles().insertFile(MediaHeapFile.of("", "", "", "", null));
         db.getTags().insertTags(
-                MediaHeapTagListFactory.start(-1, "ns")
+                MediaHeapTagListFactory.start(file, "ns")
                         .add("hello", "world")
                         .build()
         );
-        var tags = db.getTags().getTagsForFile(-1);
+        var tags = db.getTags().getTagsForFile(file);
         assertEquals(1, tags.size());
         assertEquals("ns", tags.get(0).getNamespace());
         assertEquals("hello", tags.get(0).getKey());
         assertEquals("world", tags.get(0).getValue());
-
-        var file = db.getFiles().insertFile(MediaHeapFile.of("/", "", "", "", null));
-        db.getTags().insertTags(
-                MediaHeapTagListFactory.start(file, "ns")
-                        .add("hello", "real file")
-                        .build()
-        );
-        tags = db.getTags().getTagsForFile(file);
-        assertEquals(1, tags.size());
-        assertEquals(file.getId(), tags.get(0).getFileId());
-        assertEquals("ns", tags.get(0).getNamespace());
-        assertEquals("hello", tags.get(0).getKey());
-        assertEquals("real file", tags.get(0).getValue());
     }
 }
