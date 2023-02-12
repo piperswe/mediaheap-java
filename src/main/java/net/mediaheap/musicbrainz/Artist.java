@@ -6,7 +6,7 @@ import net.mediaheap.model.GenericTagConvertible;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
 import net.mediaheap.model.MediaHeapTagListFactory;
-import org.musicbrainz.model.entity.ArtistWs2;
+import net.mediaheap.musicbrainz.http.HTTPArtist;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,39 +27,43 @@ public class Artist implements GenericTagConvertible {
     String end;
     String ended;
 
-    public static @NonNull Artist fromWs2(@NonNull ArtistWs2 ws2) {
+    public static @NonNull Artist fromHttp(@NonNull HTTPArtist http) {
         String areaId = null;
-        var area = ws2.getArea();
+        var area = http.area();
         if (area != null) {
-            areaId = area.getId();
+            areaId = area.id();
         }
         String beginAreaId = null;
-        var beginArea = ws2.getBeginArea();
+        var beginArea = http.beginArea();
         if (beginArea != null) {
-            beginAreaId = beginArea.getId();
+            beginAreaId = beginArea.id();
         }
         String endAreaId = null;
-        var endArea = ws2.getEndArea();
+        var endArea = http.endArea();
         if (endArea != null) {
-            endAreaId = endArea.getId();
+            endAreaId = endArea.id();
         }
         String begin = null;
         String end = null;
         String ended = null;
-        var lifespan = ws2.getLifeSpan();
+        var lifespan = http.lifeSpan();
         if (lifespan != null) {
-            begin = lifespan.getBegin();
-            end = lifespan.getEnd();
-            ended = lifespan.getEnded() ? "true" : "false";
+            begin = lifespan.begin();
+            end = lifespan.end();
+            ended = lifespan.ended() ? "true" : "false";
+        }
+        String isni = null;
+        if (http.isnis().length > 0) {
+            isni = http.isnis()[0];
         }
         return of(
                 LocalDate.now().toString(),
-                ws2.getId(),
-                ws2.getName(),
-                ws2.getSortName(),
-                ws2.getDisambiguation(),
-                ws2.getDisplayIsni(),
-                ws2.getCountry(),
+                http.id(),
+                http.name(),
+                http.sortName(),
+                http.disambiguation(),
+                isni,
+                http.country(),
                 areaId,
                 beginAreaId,
                 endAreaId,

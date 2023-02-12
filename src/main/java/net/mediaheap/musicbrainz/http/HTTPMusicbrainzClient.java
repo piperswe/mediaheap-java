@@ -1,19 +1,39 @@
 package net.mediaheap.musicbrainz.http;
 
+import com.google.gson.Gson;
 import lombok.NonNull;
 import net.mediaheap.musicbrainz.*;
 import org.musicbrainz.MBWS2Exception;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+
 public class HTTPMusicbrainzClient implements MusicbrainzClient {
+    private final HttpClient client = HttpClient.newHttpClient();
+    private final Gson gson = new Gson();
+
     @Override
-    public Artist getArtist(@NonNull String id) throws MBWS2Exception {
-        var controller = new org.musicbrainz.controller.Artist("mediaheap-java", "", "https://github.com/piperswe/mediaheap-java");
-        var artist = controller.getComplete(id);
-        if (artist == null) {
+    public Artist getArtist(@NonNull String id) throws Exception {
+        var url = String.format("https://musicbrainz.org/ws/2/artist/%s?fmt=json", id);
+        var request = HttpRequest.newBuilder()
+                .uri(new URI(url))
+                .header("User-Agent", "mediaheap-java ( https://github.com/piperswe/mediaheap-java )")
+                .timeout(Duration.of(10, ChronoUnit.SECONDS))
+                .GET()
+                .build();
+        var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 404) {
             return null;
-        } else {
-            return Artist.fromWs2(artist);
+        } else if (response.statusCode() >= 300) {
+            throw new Exception(String.format("Got status code %d", response.statusCode()));
         }
+        var json = response.body();
+        var artist = gson.fromJson(json, HTTPArtist.class);
+        return Artist.fromHttp(artist);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package net.mediaheap.importer;
 
 import com.google.common.io.BaseEncoding;
-
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
