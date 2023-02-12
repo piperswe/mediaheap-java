@@ -5,6 +5,7 @@ import lombok.NonNull;
 import net.mediaheap.musicbrainz.Release;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 // TODO: cover-art-archive
 record HTTPRelease(String asin, String date, String quality, String country,
@@ -25,5 +26,16 @@ record HTTPRelease(String asin, String date, String quality, String country,
                 date(),
                 country()
         );
+    }
+
+    @NonNull Optional<HTTPTrack> getTrackById(@NonNull String id) {
+        for (var medium : media()) {
+            for (var track : medium.tracks()) {
+                if (track.id().equals(id)) {
+                    return Optional.of(track);
+                }
+            }
+        }
+        return Optional.empty();
     }
 }

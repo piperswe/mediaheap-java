@@ -101,19 +101,7 @@ public class HTTPMusicbrainzClient implements MusicbrainzClient {
 
     @Override
     public @NonNull Optional<Track> getTrack(@NonNull String releaseId, @NonNull String trackId) throws ExecutionException {
-        var releaseOption = releaseCache.get(releaseId);
-        if (releaseOption.isPresent()) {
-            var release = releaseOption.get();
-            var media = release.media();
-            for (var medium : media) {
-                for (var track : medium.tracks()) {
-                    if (track.id().equals(trackId)) {
-                        return Optional.of(track.toTrack());
-                    }
-                }
-            }
-        }
-        return Optional.empty();
+        return releaseCache.get(releaseId).flatMap((r) -> r.getTrackById(trackId)).map(HTTPTrack::toTrack);
     }
 
     @Override
