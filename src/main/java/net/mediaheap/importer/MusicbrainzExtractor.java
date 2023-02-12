@@ -23,86 +23,86 @@ public class MusicbrainzExtractor implements Extractor {
 
     private @NonNull List<MediaHeapTag> extractAlbum(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_albumid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var release = client.getRelease(id);
+        var release = client.getRelease(id.get());
         return release.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractAlbumArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_albumartistid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var artist = client.getArtist(id);
+        var artist = client.getArtist(id.get());
         return artist.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/album-artist")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_artistid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var artist = client.getArtist(id);
+        var artist = client.getArtist(id.get());
         return artist.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/artist")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractOriginalAlbum(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_originalalbumid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var release = client.getRelease(id);
+        var release = client.getRelease(id.get());
         return release.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-album")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractOriginalArtist(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_originalartistid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var artist = client.getArtist(id);
+        var artist = client.getArtist(id.get());
         return artist.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/original-artist")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractRecording(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_recordingid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var recording = client.getRecording(id);
+        var recording = client.getRecording(id.get());
         return recording.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/recording")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractReleaseGroup(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_releasegroupid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var releaseGroup = client.getReleaseGroup(id);
+        var releaseGroup = client.getReleaseGroup(id.get());
         return releaseGroup.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/release-group")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractWork(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var id = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_workid");
-        if (id == null) {
+        if (id.isEmpty()) {
             return Collections.emptyList();
         }
-        var work = client.getWork(id);
+        var work = client.getWork(id.get());
         return work.map((x) -> x.getTags(file, "https://schemas.mediaheap.net/musicbrainz/track/work")).orElse(Collections.emptyList());
     }
 
     private @NonNull List<MediaHeapTag> extractTrack(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws Exception {
         var trackId = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_trackid");
-        if (trackId == null) {
+        if (trackId.isEmpty()) {
             return Collections.emptyList();
         }
         var releaseId = MediaHeapTag.findTagValueInNamespaces(existingTags, AudioTaggerExtractor.AUDIO_NAMESPACES, "musicbrainz_albumid");
-        if (releaseId == null) {
+        if (releaseId.isEmpty()) {
             return Collections.emptyList();
         }
-        var track = client.getTrack(releaseId, trackId);
+        var track = client.getTrack(releaseId.get(), trackId.get());
         if (track.isEmpty()) {
             System.err.println("empty");
         }

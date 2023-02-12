@@ -51,8 +51,12 @@ public class MimeExtractor implements Extractor {
         registerExtractors("audio/vnd.wave", wav, musicbrainz);
     }
 
+    public @NonNull List<Extractor> getExtractors(@NonNull Optional<String> mimeType) {
+        return mimeType.flatMap((t) -> Optional.ofNullable(extractors.get(t))).orElse(Collections.emptyList());
+    }
+
     public @NonNull List<Extractor> getExtractors(String mimeType) {
-        return extractors.getOrDefault(mimeType, Collections.emptyList());
+        return getExtractors(Optional.ofNullable(mimeType));
     }
 
     @Override

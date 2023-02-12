@@ -1,7 +1,9 @@
 package net.mediaheap.model;
 
+import lombok.NonNull;
+
 import java.util.List;
 
 public interface GenericTagConvertible {
-    List<MediaHeapTag> getTags(MediaHeapFile file, String namespace);
+    @NonNull List<MediaHeapTag> getTags(@NonNull MediaHeapFile file, @NonNull String namespace);
 }

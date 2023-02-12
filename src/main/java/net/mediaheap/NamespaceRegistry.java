@@ -8,10 +8,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class NamespaceRegistry {
+    @NonNull
     private static final NamespaceRegistry global = new NamespaceRegistry();
+    @NonNull
     private static final Gson gson = new Gson();
+    @NonNull
     private final Map<String, NamespaceSchema> registered = new HashMap<>();
 
     public static @NonNull NamespaceRegistry getGlobal() {
@@ -22,8 +26,8 @@ public class NamespaceRegistry {
         registered.put(namespaceSchema.getUri(), namespaceSchema);
     }
 
-    public NamespaceSchema getSchema(@NonNull String uri) {
-        return registered.get(uri);
+    public Optional<NamespaceSchema> getSchema(@NonNull String uri) {
+        return Optional.ofNullable(registered.get(uri));
     }
 
     private void registerBuiltinFromResource(@NonNull String path) throws IOException {

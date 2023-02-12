@@ -1,5 +1,7 @@
 package net.mediaheap.database;
 
+import lombok.NonNull;
+
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -9,41 +11,42 @@ import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 
 public class SingleConnectionDataSource implements DataSource {
+    @NonNull
     private final UncloseableConnection connection;
     private PrintWriter logWriter = null;
     private int loginTimeout = 0;
 
-    public SingleConnectionDataSource(Connection connection) {
+    public SingleConnectionDataSource(@NonNull Connection connection) {
         this.connection = new UncloseableConnection(connection);
     }
 
     @Override
-    public UncloseableConnection getConnection() throws SQLException {
+    public @NonNull UncloseableConnection getConnection() {
         return connection;
     }
 
     @Override
-    public UncloseableConnection getConnection(String username, String password) throws SQLException {
+    public @NonNull UncloseableConnection getConnection(String username, String password) {
         return connection;
     }
 
     @Override
-    public PrintWriter getLogWriter() throws SQLException {
+    public PrintWriter getLogWriter() {
         return logWriter;
     }
 
     @Override
-    public void setLogWriter(PrintWriter out) throws SQLException {
+    public void setLogWriter(PrintWriter out) {
         logWriter = out;
     }
 
     @Override
-    public int getLoginTimeout() throws SQLException {
+    public int getLoginTimeout() {
         return loginTimeout;
     }
 
     @Override
-    public void setLoginTimeout(int seconds) throws SQLException {
+    public void setLoginTimeout(int seconds) {
         loginTimeout = seconds;
     }
 
@@ -53,22 +56,16 @@ public class SingleConnectionDataSource implements DataSource {
     }
 
     @Override
-    public <T> T unwrap(Class<T> iface) throws SQLException {
+    public <T> T unwrap(Class<T> iface) {
         return null;
     }
 
     @Override
-    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+    public boolean isWrapperFor(Class<?> iface) {
         return false;
     }
 
-    private static class UncloseableConnection implements Connection {
-        private final Connection c;
-
-        UncloseableConnection(Connection c) {
-            this.c = c;
-        }
-
+    private record UncloseableConnection(Connection c) implements Connection {
         @Override
         public Statement createStatement() throws SQLException {
             return c.createStatement();
@@ -110,7 +107,7 @@ public class SingleConnectionDataSource implements DataSource {
         }
 
         @Override
-        public void close() throws SQLException {
+        public void close() {
             // NOOP
         }
 

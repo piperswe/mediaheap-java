@@ -4,6 +4,7 @@ import lombok.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MediaHeapTagListFactory {
     private final int fileId;
@@ -34,11 +35,13 @@ public class MediaHeapTagListFactory {
         return new MediaHeapTagListFactory(fileId, namespace, tags);
     }
 
-    public @NonNull MediaHeapTagListFactory add(@NonNull String key, String value) {
-        if (value != null && !value.isBlank()) {
-            tags.add(MediaHeapTag.of(-1, fileId, namespace, key, value));
-        }
+    public @NonNull MediaHeapTagListFactory add(@NonNull String key, @NonNull Optional<String> value) {
+        value.ifPresent(s -> tags.add(MediaHeapTag.of(-1, fileId, namespace, key, s)));
         return this;
+    }
+
+    public @NonNull MediaHeapTagListFactory add(@NonNull String key, String value) {
+        return add(key, Optional.ofNullable("".equals(value) ? null : value));
     }
 
     public @NonNull List<MediaHeapTag> build() {

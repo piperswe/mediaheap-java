@@ -25,7 +25,7 @@ public class TestHelpers {
 
     public static @NonNull List<@NonNull MediaHeapTag> tagsFromTestFile(@NonNull Extractor extractor, @NonNull String filename) throws IOException {
         var path = testFilePath(filename);
-        var file = MediaHeapFile.of(path, "", "", "", Importer.getPathMimeType(path));
+        var file = MediaHeapFile.of(path, "", "", "", Importer.getPathMimeType(path).orElse(null));
         return extractor.extractTagsFrom(file, Collections.emptyList());
     }
 

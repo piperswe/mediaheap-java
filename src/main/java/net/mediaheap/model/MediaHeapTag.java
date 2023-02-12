@@ -5,10 +5,7 @@ import lombok.Value;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Value(staticConstructor = "of")
 public class MediaHeapTag {
@@ -22,7 +19,7 @@ public class MediaHeapTag {
         return of(id, file.getId(), namespace, key, value);
     }
 
-    public static @NonNull MediaHeapTag fromResultSet(ResultSet results) throws SQLException {
+    public static @NonNull MediaHeapTag fromResultSet(@NonNull ResultSet results) throws SQLException {
         return of(
                 results.getInt("id"),
                 results.getInt("fileId"),
@@ -32,29 +29,29 @@ public class MediaHeapTag {
         );
     }
 
-    public static String findTagValue(@NonNull Iterable<MediaHeapTag> tags, @NonNull String namespace, @NonNull String key) {
+    public static @NonNull Optional<String> findTagValue(@NonNull Iterable<MediaHeapTag> tags, @NonNull String namespace, @NonNull String key) {
         for (var tag : tags) {
             if (tag.getNamespace().equals(namespace) && tag.getKey().equalsIgnoreCase(key)) {
-                return tag.getValue();
+                return Optional.of(tag.getValue());
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    public static String findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Set<String> namespaces, String key) {
+    public static @NonNull Optional<String> findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Set<String> namespaces, String key) {
         for (var tag : tags) {
             if (namespaces.contains(tag.getNamespace()) && tag.getKey().equalsIgnoreCase(key)) {
-                return tag.getValue();
+                return Optional.of(tag.getValue());
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    public static String findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Collection<String> namespaces, String key) {
+    public static @NonNull Optional<String> findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Collection<String> namespaces, String key) {
         return findTagValueInNamespaces(tags, new HashSet<>(namespaces), key);
     }
 
-    public static String findTagValueInNamespaces(Iterable<MediaHeapTag> tags, String[] namespaces, String key) {
+    public static @NonNull Optional<String> findTagValueInNamespaces(Iterable<MediaHeapTag> tags, String[] namespaces, String key) {
         return findTagValueInNamespaces(tags, Arrays.asList(namespaces), key);
     }
 }

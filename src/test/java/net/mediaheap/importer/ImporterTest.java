@@ -34,19 +34,19 @@ class ImporterTest {
 
     @Test
     void getPathMimeType() throws IOException {
-        assertIsOne(Importer.getPathMimeType(testFilePath("flac/filled_tags.flac")), "audio/flac", "audio/x-flac");
-        assertIsOne(Importer.getPathMimeType(testFilePath("flac/missing_tags.flac")), "audio/flac", "audio/x-flac");
-        assertIsOne(Importer.getPathMimeType(testFilePath("m4a/filled_tags.m4a")), "audio/mp4", "audio/m4a", "audio/x-m4a");
-        assertIsOne(Importer.getPathMimeType(testFilePath("m4a/missing_tags.m4a")), "audio/mp4", "audio/m4a", "audio/x-m4a");
-        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/both.mp3")), "audio/mpeg", "audio/mp3");
-        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/id3v2.mp3")), "audio/mpeg", "audio/mp3");
-        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/missing_id3.mp3")), "audio/mpeg", "audio/mp3");
-        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/Study and Relax.mp3")), "audio/mpeg", "audio/mp3");
-        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/filled_tags.ogg")), "audio/ogg");
-        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/missing_tags.ogg")), "audio/ogg");
-        assertIsOne(Importer.getPathMimeType(testFilePath("wav/missing_tags.wav")), "audio/wav", "audio/x-wav", "audio/vnd.wave");
-        assertIsOne(Importer.getPathMimeType(testFilePath("wav/filled_tags.wav")), "audio/wav", "audio/x-wav", "audio/vnd.wave");
-        assertIsOne(Importer.getPathMimeType(testFilePath("call_me_what_you_like.flac")), "audio/flac", "audio/x-flac");
+        assertIsOne(Importer.getPathMimeType(testFilePath("flac/filled_tags.flac")).orElse(null), "audio/flac", "audio/x-flac");
+        assertIsOne(Importer.getPathMimeType(testFilePath("flac/missing_tags.flac")).orElse(null), "audio/flac", "audio/x-flac");
+        assertIsOne(Importer.getPathMimeType(testFilePath("m4a/filled_tags.m4a")).orElse(null), "audio/mp4", "audio/m4a", "audio/x-m4a");
+        assertIsOne(Importer.getPathMimeType(testFilePath("m4a/missing_tags.m4a")).orElse(null), "audio/mp4", "audio/m4a", "audio/x-m4a");
+        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/both.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
+        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/id3v2.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
+        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/missing_id3.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
+        assertIsOne(Importer.getPathMimeType(testFilePath("mp3/Study and Relax.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
+        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/filled_tags.ogg")).orElse(null), "audio/ogg");
+        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/missing_tags.ogg")).orElse(null), "audio/ogg");
+        assertIsOne(Importer.getPathMimeType(testFilePath("wav/missing_tags.wav")).orElse(null), "audio/wav", "audio/x-wav", "audio/vnd.wave");
+        assertIsOne(Importer.getPathMimeType(testFilePath("wav/filled_tags.wav")).orElse(null), "audio/wav", "audio/x-wav", "audio/vnd.wave");
+        assertIsOne(Importer.getPathMimeType(testFilePath("call_me_what_you_like.flac")).orElse(null), "audio/flac", "audio/x-flac");
     }
 
     @Test

@@ -25,7 +25,7 @@ public class Artist implements GenericTagConvertible {
     String end;
     String ended;
 
-    public List<MediaHeapTag> getTags(@NonNull MediaHeapFile file, @NonNull String namespace) {
+    public @NonNull List<MediaHeapTag> getTags(@NonNull MediaHeapFile file, @NonNull String namespace) {
         return MediaHeapTagListFactory.start(file, namespace)
                 .add("fetched", getFetched())
                 .add("name", getName())

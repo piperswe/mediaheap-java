@@ -17,6 +17,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.Optional;
 
 public class Importer {
     @NonNull
@@ -30,8 +31,8 @@ public class Importer {
         this.db = db;
     }
 
-    public static String getPathMimeType(@NonNull String path) throws IOException {
-        return Files.probeContentType(FileSystems.getDefault().getPath(path));
+    public static Optional<String> getPathMimeType(@NonNull String path) throws IOException {
+        return Optional.ofNullable(Files.probeContentType(FileSystems.getDefault().getPath(path)));
     }
 
     private @NonNull Hashes hashFile(@NonNull String path) throws IOException {
@@ -59,17 +60,18 @@ public class Importer {
         }
     }
 
-    public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, String mimeType) throws IOException, SQLException {
+    public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, @NonNull Optional<String> mimeType) throws IOException, SQLException {
         var hashes = hashFile(path);
-        var fileType = "application/octet-stream";
-        if (mimeType != null && !"".equals(mimeType)) {
-            fileType = mimeType;
-        }
+        var fileType = mimeType.orElse("application/octet-stream");
         var file = MediaHeapFile.of(path, hashes.sha256, hashes.sha512, hashes.md5, fileType);
         file = db.getFiles().insertFile(file);
         var tags = getExtractor().extractTagsFrom(file, Collections.emptyList());
         db.getTags().insertTags(tags);
         return file;
+    }
+
+    public @NonNull MediaHeapFile importFromWithMimeType(@NonNull String path, String mimeType) throws IOException, SQLException {
+        return importFromWithMimeType(path, Optional.ofNullable(mimeType));
     }
 
     public @NonNull MediaHeapFile importFrom(@NonNull String path) throws IOException, SQLException {
