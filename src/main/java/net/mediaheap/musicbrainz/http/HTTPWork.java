@@ -14,7 +14,7 @@ record HTTPWork(String[] iswcs, String[] languages, String id, @SerializedName("
         if (iswcs.length > 0) {
             iswc = iswcs[0];
         }
-        return Work.of(
+        return new Work(
                 LocalDate.now().toString(),
                 id(),
                 title(),

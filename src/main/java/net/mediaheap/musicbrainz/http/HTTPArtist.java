@@ -42,7 +42,7 @@ record HTTPArtist(String[] isnis, String country, @SerializedName("begin-area") 
         if (isnis.length > 0) {
             isni = isnis[0];
         }
-        return Artist.of(
+        return new Artist(
                 LocalDate.now().toString(),
                 id(),
                 name(),

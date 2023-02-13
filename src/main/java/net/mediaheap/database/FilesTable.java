@@ -20,11 +20,11 @@ public class FilesTable {
         conn.setAutoCommit(false);
         var rolledBack = false;
         try (var stmt = db.getConnection().prepareStatement("INSERT INTO File(path, sha256Hash, sha512Hash, md5Hash, fileType) VALUES (?, ?, ?, ?, ?) RETURNING *;")) {
-            stmt.setString(1, file.getPath());
-            stmt.setString(2, file.getSha256Hash());
-            stmt.setString(3, file.getSha512Hash());
-            stmt.setString(4, file.getMd5Hash());
-            stmt.setString(5, file.getFileType());
+            stmt.setString(1, file.path());
+            stmt.setString(2, file.sha256Hash());
+            stmt.setString(3, file.sha512Hash());
+            stmt.setString(4, file.md5Hash());
+            stmt.setString(5, file.fileType());
             @Cleanup var results = stmt.executeQuery();
             if (results.next()) {
                 return MediaHeapFile.fromResultSet(results);

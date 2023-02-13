@@ -9,7 +9,7 @@ import java.time.LocalDate;
 record HTTPRecording(@SerializedName("first-release-date") String firstReleaseDate, long length, String title,
                      boolean video, String id, String disambiguation) {
     @NonNull Recording toRecording() {
-        return Recording.of(
+        return new Recording(
                 LocalDate.now().toString(),
                 id(),
                 title(),

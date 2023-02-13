@@ -16,11 +16,11 @@ public class ImportExtractor implements Extractor {
     @Override
     public @NonNull List<MediaHeapTag> extractTagsFrom(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws IOException {
         return MediaHeapTagListFactory.start(file, NS)
-                .add("originalPath", file.getPath())
+                .add("originalPath", file.path())
                 .add("size", String.valueOf(Files.size(file.getNioPath())))
-                .add("sha256", file.getSha256Hash())
-                .add("sha512", file.getSha512Hash())
-                .add("md5", file.getMd5Hash())
+                .add("sha256", file.sha256Hash())
+                .add("sha512", file.sha512Hash())
+                .add("md5", file.md5Hash())
                 .add("timestamp", String.valueOf(Instant.now().getEpochSecond()))
                 .build();
     }

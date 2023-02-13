@@ -23,7 +23,7 @@ public class NamespaceRegistry {
     }
 
     public void register(@NonNull NamespaceSchema namespaceSchema) {
-        registered.put(namespaceSchema.getUri(), namespaceSchema);
+        registered.put(namespaceSchema.uri(), namespaceSchema);
     }
 
     public Optional<NamespaceSchema> getSchema(@NonNull String uri) {

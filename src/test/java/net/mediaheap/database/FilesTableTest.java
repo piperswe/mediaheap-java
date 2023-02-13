@@ -27,28 +27,28 @@ class FilesTableTest {
     void insertFile() throws SQLException {
         var file = db.getFiles().insertFile(MediaHeapFile.of("/", "sha256", "sha512", "md5", null));
         assertNotNull(file);
-        assertEquals("/", file.getPath());
-        assertEquals("sha256", file.getSha256Hash());
-        assertEquals("sha512", file.getSha512Hash());
-        assertEquals("md5", file.getMd5Hash());
-        assertNull(file.getFileType());
+        assertEquals("/", file.path());
+        assertEquals("sha256", file.sha256Hash());
+        assertEquals("sha512", file.sha512Hash());
+        assertEquals("md5", file.md5Hash());
+        assertNull(file.fileType());
     }
 
     @Test
     void getFile() throws SQLException {
         var file = db.getFiles().insertFile(MediaHeapFile.of("/", "sha256", "sha512", "md5", "type"));
         assertNotNull(file);
-        assertEquals("/", file.getPath());
-        assertEquals("sha256", file.getSha256Hash());
-        assertEquals("sha512", file.getSha512Hash());
-        assertEquals("md5", file.getMd5Hash());
-        assertEquals("type", file.getFileType());
-        file = db.getFiles().getFile(file.getId());
+        assertEquals("/", file.path());
+        assertEquals("sha256", file.sha256Hash());
+        assertEquals("sha512", file.sha512Hash());
+        assertEquals("md5", file.md5Hash());
+        assertEquals("type", file.fileType());
+        file = db.getFiles().getFile(file.id());
         assertNotNull(file);
-        assertEquals("/", file.getPath());
-        assertEquals("sha256", file.getSha256Hash());
-        assertEquals("sha512", file.getSha512Hash());
-        assertEquals("md5", file.getMd5Hash());
-        assertEquals("type", file.getFileType());
+        assertEquals("/", file.path());
+        assertEquals("sha256", file.sha256Hash());
+        assertEquals("sha512", file.sha512Hash());
+        assertEquals("md5", file.md5Hash());
+        assertEquals("type", file.fileType());
     }
 }

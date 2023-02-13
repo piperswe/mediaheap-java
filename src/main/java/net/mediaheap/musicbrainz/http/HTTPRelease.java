@@ -15,7 +15,7 @@ record HTTPRelease(String asin, String date, String quality, String country,
                    @SerializedName("status-id") String statusId,
                    @SerializedName("text-representation") HTTPTextRepresentation textRepresentation) {
     @NonNull Release toRelease() {
-        return Release.of(
+        return new Release(
                 LocalDate.now().toString(),
                 id(),
                 title(),

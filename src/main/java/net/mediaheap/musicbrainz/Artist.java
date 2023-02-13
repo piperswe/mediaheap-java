@@ -1,7 +1,6 @@
 package net.mediaheap.musicbrainz;
 
 import lombok.NonNull;
-import lombok.Value;
 import net.mediaheap.model.GenericTagConvertible;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
@@ -9,36 +8,23 @@ import net.mediaheap.model.MediaHeapTagListFactory;
 
 import java.util.List;
 
-@Value(staticConstructor = "of")
-public class Artist implements GenericTagConvertible {
-    String fetched;
-    String id;
-    String name;
-    String sortName;
-    String disambiguation;
-    String isni;
-    String country;
-    String areaId;
-    String beginAreaId;
-    String endAreaId;
-    String begin;
-    String end;
-    String ended;
-
+public record Artist(String fetched, String id, String name, String sortName, String disambiguation, String isni,
+                     String country, String areaId, String beginAreaId, String endAreaId, String begin, String end,
+                     String ended) implements GenericTagConvertible {
     public @NonNull List<MediaHeapTag> getTags(@NonNull MediaHeapFile file, @NonNull String namespace) {
         return MediaHeapTagListFactory.start(file, namespace)
-                .add("fetched", getFetched())
-                .add("name", getName())
-                .add("sort-name", getSortName())
-                .add("disambiguation", getDisambiguation())
-                .add("isni", getIsni())
-                .add("country", getCountry())
-                .add("area-id", getAreaId())
-                .add("begin-area-id", getBeginAreaId())
-                .add("end-area-id", getEndAreaId())
-                .add("begin", getBegin())
-                .add("end", getEnd())
-                .add("ended", getEnded())
+                .add("fetched", fetched())
+                .add("name", name())
+                .add("sort-name", sortName())
+                .add("disambiguation", disambiguation())
+                .add("isni", isni())
+                .add("country", country())
+                .add("area-id", areaId())
+                .add("begin-area-id", beginAreaId())
+                .add("end-area-id", endAreaId())
+                .add("begin", begin())
+                .add("end", end())
+                .add("ended", ended())
                 .build();
     }
 }

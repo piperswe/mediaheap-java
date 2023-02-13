@@ -32,8 +32,8 @@ public class TestHelpers {
 
     public static void assertHasTag(@NonNull String namespace, @NonNull List<@NonNull MediaHeapTag> tags, @NonNull String key, String value) {
         for (var tag : tags) {
-            if (tag.getNamespace().equals(namespace) && tag.getKey().equals(key)) {
-                assertEquals(value, tag.getValue());
+            if (tag.namespace().equals(namespace) && tag.key().equals(key)) {
+                assertEquals(value, tag.value());
                 return;
             }
         }

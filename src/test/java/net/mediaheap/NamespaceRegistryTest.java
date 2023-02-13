@@ -11,7 +11,7 @@ class NamespaceRegistryTest {
     private void assertBuiltinExists(NamespaceRegistry registry, String uri) {
         var schema = registry.getSchema(uri);
         assertTrue(schema.isPresent(), String.format("Schema at uri %s isn't registered", uri));
-        assertEquals(schema.get().getUri(), uri, String.format("Schema at uri %s doesn't have a matching uri attribute", uri));
+        assertEquals(schema.get().uri(), uri, String.format("Schema at uri %s doesn't have a matching uri attribute", uri));
     }
 
     @Test

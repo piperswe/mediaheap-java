@@ -44,8 +44,8 @@ class TagsTableTest {
         );
         var tags = db.getTags().getTagsForFile(file);
         assertEquals(1, tags.size());
-        assertEquals("ns", tags.get(0).getNamespace());
-        assertEquals("hello", tags.get(0).getKey());
-        assertEquals("world", tags.get(0).getValue());
+        assertEquals("ns", tags.get(0).namespace());
+        assertEquals("hello", tags.get(0).key());
+        assertEquals("world", tags.get(0).value());
     }
 }

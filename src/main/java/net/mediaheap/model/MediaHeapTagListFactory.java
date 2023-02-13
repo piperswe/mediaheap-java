@@ -20,7 +20,7 @@ public class MediaHeapTagListFactory {
     }
 
     public static @NonNull MediaHeapTagListFactory start(@NonNull MediaHeapFile file, @NonNull String namespace) {
-        return start(file.getId(), namespace);
+        return start(file.id(), namespace);
     }
 
     public static @NonNull MediaHeapTagListFactory start(int fileId, @NonNull String namespace) {
@@ -28,7 +28,7 @@ public class MediaHeapTagListFactory {
     }
 
     public static @NonNull MediaHeapTagListFactory start(@NonNull MediaHeapFile file, @NonNull String namespace, @NonNull List<MediaHeapTag> tags) {
-        return start(file.getId(), namespace, tags);
+        return start(file.id(), namespace, tags);
     }
 
     public static @NonNull MediaHeapTagListFactory start(int fileId, @NonNull String namespace, @NonNull List<MediaHeapTag> tags) {
@@ -36,7 +36,7 @@ public class MediaHeapTagListFactory {
     }
 
     public @NonNull MediaHeapTagListFactory add(@NonNull String key, @NonNull Optional<String> value) {
-        value.ifPresent(s -> tags.add(MediaHeapTag.of(-1, fileId, namespace, key, s)));
+        value.ifPresent(s -> tags.add(new MediaHeapTag(-1, fileId, namespace, key, s)));
         return this;
     }
 

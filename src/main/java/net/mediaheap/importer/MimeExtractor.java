@@ -62,9 +62,9 @@ public class MimeExtractor implements Extractor {
 
     @Override
     public @NonNull List<MediaHeapTag> extractTagsFrom(@NonNull MediaHeapFile file, @NonNull List<MediaHeapTag> existingTags) throws IOException {
-        var extractors = getExtractors(file.getFileType());
+        var extractors = getExtractors(file.fileType());
         if (extractors.isEmpty()) {
-            log.atWarning().log("No extractors for file type %s!", file.getFileType());
+            log.atWarning().log("No extractors for file type %s!", file.fileType());
         }
         List<MediaHeapTag> tags = new ArrayList<>();
         for (var extractor : extractors) {

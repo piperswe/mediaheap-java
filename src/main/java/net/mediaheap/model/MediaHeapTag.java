@@ -1,26 +1,18 @@
 package net.mediaheap.model;
 
 import lombok.NonNull;
-import lombok.Value;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-@Value(staticConstructor = "of")
-public class MediaHeapTag {
-    int id;
-    int fileId;
-    @NonNull String namespace;
-    @NonNull String key;
-    @NonNull String value;
-
+public record MediaHeapTag(int id, int fileId, @NonNull String namespace, @NonNull String key, @NonNull String value) {
     public static @NonNull MediaHeapTag of(int id, @NonNull MediaHeapFile file, @NonNull String namespace, @NonNull String key, @NonNull String value) {
-        return of(id, file.getId(), namespace, key, value);
+        return new MediaHeapTag(id, file.id(), namespace, key, value);
     }
 
     public static @NonNull MediaHeapTag fromResultSet(@NonNull ResultSet results) throws SQLException {
-        return of(
+        return new MediaHeapTag(
                 results.getInt("id"),
                 results.getInt("fileId"),
                 results.getString("namespace"),
@@ -31,8 +23,8 @@ public class MediaHeapTag {
 
     public static @NonNull Optional<String> findTagValue(@NonNull Iterable<MediaHeapTag> tags, @NonNull String namespace, @NonNull String key) {
         for (var tag : tags) {
-            if (tag.getNamespace().equals(namespace) && tag.getKey().equalsIgnoreCase(key)) {
-                return Optional.of(tag.getValue());
+            if (tag.namespace().equals(namespace) && tag.key().equalsIgnoreCase(key)) {
+                return Optional.of(tag.value());
             }
         }
         return Optional.empty();
@@ -40,8 +32,8 @@ public class MediaHeapTag {
 
     public static @NonNull Optional<@NonNull String> findTagValueInNamespaces(@NonNull Iterable<@NonNull MediaHeapTag> tags, @NonNull Set<@NonNull String> namespaces, @NonNull String key) {
         for (var tag : tags) {
-            if (namespaces.contains(tag.getNamespace()) && tag.getKey().equalsIgnoreCase(key)) {
-                return Optional.of(tag.getValue());
+            if (namespaces.contains(tag.namespace()) && tag.key().equalsIgnoreCase(key)) {
+                return Optional.of(tag.value());
             }
         }
         return Optional.empty();
@@ -58,11 +50,11 @@ public class MediaHeapTag {
     public static @NonNull Map<@NonNull String, @NonNull Map<@NonNull String, @NonNull String>> toNamespaceKeyValueMap(@NonNull Iterable<@NonNull MediaHeapTag> tags) {
         Map<@NonNull String, @NonNull Map<@NonNull String, @NonNull String>> map = new HashMap<>();
         for (var tag : tags) {
-            if (!map.containsKey(tag.getNamespace())) {
-                map.put(tag.getNamespace(), new HashMap<>());
+            if (!map.containsKey(tag.namespace())) {
+                map.put(tag.namespace(), new HashMap<>());
             }
-            var nsMap = map.get(tag.getNamespace());
-            nsMap.put(tag.getKey(), tag.getValue());
+            var nsMap = map.get(tag.namespace());
+            nsMap.put(tag.key(), tag.value());
         }
         return map;
     }

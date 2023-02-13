@@ -12,7 +12,7 @@ record HTTPReleaseGroup(String id, String title, @SerializedName("primary-type-i
                         @SerializedName("primary-type") String primaryType,
                         @SerializedName("secondary-types") String[] secondaryTypes) {
     @NonNull ReleaseGroup toReleaseGroup() {
-        return ReleaseGroup.of(
+        return new ReleaseGroup(
                 LocalDate.now().toString(),
                 id(),
                 title(),

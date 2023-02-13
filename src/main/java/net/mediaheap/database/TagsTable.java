@@ -24,10 +24,10 @@ public class TagsTable {
         conn.setAutoCommit(false);
         try (var stmt = db.getConnection().prepareStatement("INSERT INTO Tag(fileId, namespace, key, value) VALUES (?, ?, ?, ?);")) {
             for (var tag : tags) {
-                stmt.setInt(1, tag.getFileId());
-                stmt.setString(2, tag.getNamespace());
-                stmt.setString(3, tag.getKey());
-                stmt.setString(4, tag.getValue());
+                stmt.setInt(1, tag.fileId());
+                stmt.setString(2, tag.namespace());
+                stmt.setString(3, tag.key());
+                stmt.setString(4, tag.value());
                 stmt.addBatch();
             }
             stmt.executeBatch();
@@ -55,6 +55,6 @@ public class TagsTable {
     }
 
     public @NonNull List<@NonNull MediaHeapTag> getTagsForFile(@NonNull MediaHeapFile file) throws SQLException {
-        return getTagsForFile(file.getId());
+        return getTagsForFile(file.id());
     }
 }

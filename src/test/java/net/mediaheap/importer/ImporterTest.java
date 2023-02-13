@@ -54,28 +54,28 @@ class ImporterTest {
     void importFromWithMimeType() throws SQLException, IOException {
         var file = importer.importFromWithMimeType(testFilePath("flac/filled_tags.flac"), "audio/flac");
         assertNotNull(file);
-        assertTrue(file.getPath().endsWith("filled_tags.flac"));
-        assertEquals("audio/flac", file.getFileType());
-        assertEquals("3f7a61ec2b8d8953605fc578625a483713252832530ecf3c3de34d75a0c762c0", file.getSha512Hash());
+        assertTrue(file.path().endsWith("filled_tags.flac"));
+        assertEquals("audio/flac", file.fileType());
+        assertEquals("3f7a61ec2b8d8953605fc578625a483713252832530ecf3c3de34d75a0c762c0", file.sha512Hash());
         var tags = db.getTags().getTagsForFile(file);
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "TITLE", "Title");
         assertHasTag(ImportExtractor.NS, tags, "size", "59194");
 
         file = importer.importFromWithMimeType(testFilePath("flac/filled_tags.flac"), "audio/not-flac");
         assertNotNull(file);
-        assertTrue(file.getPath().endsWith("filled_tags.flac"));
-        assertEquals("audio/not-flac", file.getFileType());
+        assertTrue(file.path().endsWith("filled_tags.flac"));
+        assertEquals("audio/not-flac", file.fileType());
     }
 
     @Test
     void importFrom() throws SQLException, IOException, GetBytesException {
         var file = importer.importFrom(testFilePath("flac/filled_tags.flac"));
         assertNotNull(file);
-        assertTrue(file.getPath().endsWith("filled_tags.flac"));
-        assertTrue(file.getFileType().equals("audio/x-flac") || file.getFileType().equals("audio/flac"), String.format("MIME type %s doesn't seem to be FLAC", file.getFileType()));
-        assertEquals("b6af98087869f0ea1f011eb308cbe15eec596263c9b714cd4d0e1b10b04c547d", file.getSha256Hash());
-        assertEquals("3f7a61ec2b8d8953605fc578625a483713252832530ecf3c3de34d75a0c762c0", file.getSha512Hash());
-        assertEquals("69f54b1f49aef9dc92c8eb0337fba497", file.getMd5Hash());
+        assertTrue(file.path().endsWith("filled_tags.flac"));
+        assertTrue(file.fileType().equals("audio/x-flac") || file.fileType().equals("audio/flac"), String.format("MIME type %s doesn't seem to be FLAC", file.fileType()));
+        assertEquals("b6af98087869f0ea1f011eb308cbe15eec596263c9b714cd4d0e1b10b04c547d", file.sha256Hash());
+        assertEquals("3f7a61ec2b8d8953605fc578625a483713252832530ecf3c3de34d75a0c762c0", file.sha512Hash());
+        assertEquals("69f54b1f49aef9dc92c8eb0337fba497", file.md5Hash());
         var tags = db.getTags().getTagsForFile(file);
         assertHasTag(AudioTaggerExtractorTest.FLAC_NS, tags, "TITLE", "Title");
         assertHasTag(ImportExtractor.NS, tags, "size", "59194");
@@ -85,9 +85,9 @@ class ImporterTest {
 
         file = importer.importFrom(testFilePath("mp3/Study and Relax.mp3"));
         assertNotNull(file);
-        assertTrue(file.getPath().endsWith("Study and Relax.mp3"));
-        assertEquals("audio/mpeg", file.getFileType());
-        assertEquals("ea519c62546258f788e2e2f1b795d29cdc6b68aebb0bf2132a1c3e4e0c89c9a0", file.getSha512Hash());
+        assertTrue(file.path().endsWith("Study and Relax.mp3"));
+        assertEquals("audio/mpeg", file.fileType());
+        assertEquals("ea519c62546258f788e2e2f1b795d29cdc6b68aebb0bf2132a1c3e4e0c89c9a0", file.sha512Hash());
         tags = db.getTags().getTagsForFile(file);
         assertHasTag(MP3Extractor.V2NS, tags, "TP1", "Kevin MacLeod");
         assertHasTag(ImportExtractor.NS, tags, "size", "9070686");
