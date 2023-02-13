@@ -29,7 +29,7 @@ dependencies {
     implementation group: 'com.google.flogger', name: 'flogger-system-backend', version: '0.7.4'
 
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.40.1.0'
-    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.8.3'
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.14.1'
 
     implementation group: 'net.jthink', name: 'jaudiotagger', version: '3.0.1'
 
