@@ -7,13 +7,13 @@ import lombok.NonNull;
 import lombok.Setter;
 import net.mediaheap.database.DatabaseConnection;
 import net.mediaheap.model.MediaHeapFile;
+import org.overviewproject.mime_types.GetBytesException;
+import org.overviewproject.mime_types.MimeTypeDetector;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.Optional;
 
 public class Importer {
+    private static final MimeTypeDetector mimeDetector = new MimeTypeDetector();
+
     @NonNull
     private final DatabaseConnection db;
     @NonNull
@@ -34,8 +36,9 @@ public class Importer {
         this.db = db;
     }
 
-    public static Optional<String> getPathMimeType(@NonNull String path) throws IOException {
-        return Optional.ofNullable(Files.probeContentType(FileSystems.getDefault().getPath(path)));
+    public static Optional<String> getPathMimeType(@NonNull String path) throws GetBytesException {
+        var file = new File(path);
+        return Optional.ofNullable(mimeDetector.detectMimeType(file));
     }
 
     private @NonNull Hashes hashFile(@NonNull String path) throws IOException {
@@ -79,7 +82,7 @@ public class Importer {
         return importFromWithMimeType(path, Optional.ofNullable(mimeType));
     }
 
-    public @NonNull MediaHeapFile importFrom(@NonNull String path) throws IOException, SQLException {
+    public @NonNull MediaHeapFile importFrom(@NonNull String path) throws IOException, SQLException, GetBytesException {
         var contentType = getPathMimeType(path);
         return importFromWithMimeType(path, contentType);
     }

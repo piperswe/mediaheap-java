@@ -9,6 +9,7 @@ import net.mediaheap.importer.MimeExtractor;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
+import org.overviewproject.mime_types.GetBytesException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class Main {
         serviceManager.awaitStopped();
     }
 
-    private static void importFile(Namespace args) throws SQLException, IOException {
+    private static void importFile(Namespace args) throws SQLException, IOException, GetBytesException {
         try (var db = DatabaseConnection.localConnection()) {
             var importer = new Importer(db);
             MimeExtractor.getGlobal().registerBuiltinExtractors();
@@ -47,7 +48,7 @@ public class Main {
         } catch (ArgumentParserException e) {
             parser.handleError(e);
             System.exit(1);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException | IOException | GetBytesException e) {
             throw new RuntimeException(e);
         }
     }

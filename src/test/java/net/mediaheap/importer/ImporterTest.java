@@ -4,6 +4,7 @@ import net.mediaheap.database.DatabaseConnection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.overviewproject.mime_types.GetBytesException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -33,7 +34,7 @@ class ImporterTest {
     }
 
     @Test
-    void getPathMimeType() throws IOException {
+    void getPathMimeType() throws GetBytesException {
         assertIsOne(Importer.getPathMimeType(testFilePath("flac/filled_tags.flac")).orElse(null), "audio/flac", "audio/x-flac");
         assertIsOne(Importer.getPathMimeType(testFilePath("flac/missing_tags.flac")).orElse(null), "audio/flac", "audio/x-flac");
         assertIsOne(Importer.getPathMimeType(testFilePath("m4a/filled_tags.m4a")).orElse(null), "audio/mp4", "audio/m4a", "audio/x-m4a");
@@ -42,8 +43,8 @@ class ImporterTest {
         assertIsOne(Importer.getPathMimeType(testFilePath("mp3/id3v2.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
         assertIsOne(Importer.getPathMimeType(testFilePath("mp3/missing_id3.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
         assertIsOne(Importer.getPathMimeType(testFilePath("mp3/Study and Relax.mp3")).orElse(null), "audio/mpeg", "audio/mp3");
-        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/filled_tags.ogg")).orElse(null), "audio/ogg");
-        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/missing_tags.ogg")).orElse(null), "audio/ogg");
+        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/filled_tags.ogg")).orElse(null), "audio/ogg", "audio/x-vorbis+ogg");
+        assertIsOne(Importer.getPathMimeType(testFilePath("ogg/missing_tags.ogg")).orElse(null), "audio/ogg", "audio/x-vorbis+ogg");
         assertIsOne(Importer.getPathMimeType(testFilePath("wav/missing_tags.wav")).orElse(null), "audio/wav", "audio/x-wav", "audio/vnd.wave");
         assertIsOne(Importer.getPathMimeType(testFilePath("wav/filled_tags.wav")).orElse(null), "audio/wav", "audio/x-wav", "audio/vnd.wave");
         assertIsOne(Importer.getPathMimeType(testFilePath("call_me_what_you_like.flac")).orElse(null), "audio/flac", "audio/x-flac");
@@ -67,7 +68,7 @@ class ImporterTest {
     }
 
     @Test
-    void importFrom() throws SQLException, IOException {
+    void importFrom() throws SQLException, IOException, GetBytesException {
         var file = importer.importFrom(testFilePath("flac/filled_tags.flac"));
         assertNotNull(file);
         assertTrue(file.getPath().endsWith("filled_tags.flac"));

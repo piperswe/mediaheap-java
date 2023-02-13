@@ -1,6 +1,7 @@
 package net.mediaheap.importer;
 
 import org.junit.jupiter.api.Test;
+import org.overviewproject.mime_types.GetBytesException;
 
 import java.io.IOException;
 
@@ -10,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MP3ExtractorTest {
     @Test
-    void missingId3() throws IOException {
+    void missingId3() throws IOException, GetBytesException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/missing_id3.mp3");
         assertTrue(tags.isEmpty());
     }
 
     @Test
-    void id3v2() throws IOException {
+    void id3v2() throws IOException, GetBytesException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/id3v2.mp3");
         assertHasTag(MP3Extractor.V2NS, tags, "TALB", "Album Title");
         assertHasTag(MP3Extractor.V2NS, tags, "TCON", "Pop");
@@ -26,7 +27,7 @@ class MP3ExtractorTest {
     }
 
     @Test
-    void both() throws IOException {
+    void both() throws IOException, GetBytesException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/both.mp3");
 
         assertHasTag(MP3Extractor.V1NS, tags, "TALB", "Album");
@@ -43,7 +44,7 @@ class MP3ExtractorTest {
     }
 
     @Test
-    void real() throws IOException {
+    void real() throws IOException, GetBytesException {
         var tags = tagsFromTestFile(new MP3Extractor(), "mp3/Study and Relax.mp3");
 
         assertHasTag(MP3Extractor.V1NS, tags, "TAL", "Royalty Free");

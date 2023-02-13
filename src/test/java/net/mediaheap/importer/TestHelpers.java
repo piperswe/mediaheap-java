@@ -3,6 +3,7 @@ package net.mediaheap.importer;
 import lombok.NonNull;
 import net.mediaheap.model.MediaHeapFile;
 import net.mediaheap.model.MediaHeapTag;
+import org.overviewproject.mime_types.GetBytesException;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -23,7 +24,7 @@ public class TestHelpers {
         return "./src/test/resources/net/mediaheap/importer/" + filename;
     }
 
-    public static @NonNull List<@NonNull MediaHeapTag> tagsFromTestFile(@NonNull Extractor extractor, @NonNull String filename) throws IOException {
+    public static @NonNull List<@NonNull MediaHeapTag> tagsFromTestFile(@NonNull Extractor extractor, @NonNull String filename) throws IOException, GetBytesException {
         var path = testFilePath(filename);
         var file = MediaHeapFile.of(path, "", "", "", Importer.getPathMimeType(path).orElse(null));
         return extractor.extractTagsFrom(file, Collections.emptyList());
