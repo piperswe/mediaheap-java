@@ -84,5 +84,5 @@ if (hasProperty('buildScan')) {
 
 flyway {
     url = "jdbc:sqlite:${System.getProperty('user.dir')}/mediaheap.sqlite"
-    locations = ["filesystem:${System.getProperty('user.dir')}/src/main/resources/net/mediaheap/database/migrations"]
+    locations = ["classpath:net/mediaheap/database/migrations"]
 }
