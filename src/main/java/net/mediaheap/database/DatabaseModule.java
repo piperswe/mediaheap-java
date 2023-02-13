@@ -4,8 +4,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import lombok.NonNull;
 
-import java.sql.SQLException;
-
 public class DatabaseModule extends AbstractModule {
     @NonNull
     private final DatabaseConnection c;
@@ -16,7 +14,7 @@ public class DatabaseModule extends AbstractModule {
 
     @Provides
     @NonNull
-    DatabaseConnection provideDatabaseConnection() throws SQLException {
+    DatabaseConnection provideDatabaseConnection() {
         return c;
     }
 }
