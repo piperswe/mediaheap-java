@@ -1,5 +1,6 @@
 package net.mediaheap.database;
 
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
 import org.flywaydb.core.Flyway;
@@ -24,8 +25,24 @@ public class DatabaseConnection implements AutoCloseable {
         tags = new TagsTable(this);
     }
 
+    private static void execStmt(@NonNull Connection c, @NonNull String sql) throws SQLException {
+        @Cleanup var stmt = c.createStatement();
+        stmt.execute(sql);
+    }
+
     public static @NonNull DatabaseConnection of(@NonNull Connection connection) throws SQLException {
-        connection.createStatement().execute("PRAGMA foreign_keys = ON;");
+        //language=SQLite
+        execStmt(connection, "PRAGMA foreign_keys = ON;");
+        //language=SQLite
+        execStmt(connection, "PRAGMA journal_mode = WAL;");
+        //language=SQLite
+        execStmt(connection, "PRAGMA synchronous = NORMAL;");
+        //language=SQLite
+        execStmt(connection, "PRAGMA mmap_size = 30000000000;");
+        //language=SQLite
+        execStmt(connection, "PRAGMA page_size = 32768;");
+        //language=SQLite
+        execStmt(connection, "PRAGMA auto_vacuum = INCREMENTAL;");
         return new DatabaseConnection(connection);
     }
 
