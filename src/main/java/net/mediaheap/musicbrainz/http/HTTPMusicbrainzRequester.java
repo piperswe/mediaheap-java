@@ -51,6 +51,10 @@ class HTTPMusicbrainzRequester<T> extends CacheLoader<String, Optional<T>> {
                 .build();
     }
 
+    static <T> @NonNull LoadingCache<String, Optional<T>> createCache(@NonNull Function<String, String> urlGenerator, @NonNull Supplier<HttpClient> getHttpClient, @NonNull Supplier<Gson> getGson, @NonNull Class<T> klass) {
+        return new HTTPMusicbrainzRequester<>(urlGenerator, getHttpClient, getGson, klass).toLoadingCache();
+    }
+
     private @NonNull Optional<T> request(@NonNull String url) throws Exception {
         var request = newHttpRequest(url);
         rateLimiter.acquire();
@@ -73,10 +77,6 @@ class HTTPMusicbrainzRequester<T> extends CacheLoader<String, Optional<T>> {
     public @NonNull Optional<T> load(@NonNull String id) throws Exception {
         var url = urlGenerator.apply(id);
         return request(url);
-    }
-
-    static <T> @NonNull LoadingCache<String, Optional<T>> createCache(@NonNull Function<String, String> urlGenerator, @NonNull Supplier<HttpClient> getHttpClient, @NonNull Supplier<Gson> getGson, @NonNull Class<T> klass) {
-        return new HTTPMusicbrainzRequester<>(urlGenerator, getHttpClient, getGson, klass).toLoadingCache();
     }
 
     private @NonNull LoadingCache<String, Optional<T>> toLoadingCache() {

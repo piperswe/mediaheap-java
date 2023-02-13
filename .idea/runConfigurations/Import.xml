@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Import" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="net.mediaheap.Main" />
+    <module name="mediaheap-java.main" />
+    <option name="PROGRAM_PARAMETERS" value="import ./src/test/resources/net/mediaheap/importer/call_me_what_you_like.flac" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="net.mediaheap.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

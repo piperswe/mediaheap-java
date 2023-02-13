@@ -38,7 +38,7 @@ public class MediaHeapTag {
         return Optional.empty();
     }
 
-    public static @NonNull Optional<String> findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Set<String> namespaces, String key) {
+    public static @NonNull Optional<@NonNull String> findTagValueInNamespaces(@NonNull Iterable<@NonNull MediaHeapTag> tags, @NonNull Set<@NonNull String> namespaces, @NonNull String key) {
         for (var tag : tags) {
             if (namespaces.contains(tag.getNamespace()) && tag.getKey().equalsIgnoreCase(key)) {
                 return Optional.of(tag.getValue());
@@ -47,11 +47,23 @@ public class MediaHeapTag {
         return Optional.empty();
     }
 
-    public static @NonNull Optional<String> findTagValueInNamespaces(Iterable<MediaHeapTag> tags, Collection<String> namespaces, String key) {
+    public static @NonNull Optional<@NonNull String> findTagValueInNamespaces(@NonNull Iterable<@NonNull MediaHeapTag> tags, @NonNull Collection<@NonNull String> namespaces, @NonNull String key) {
         return findTagValueInNamespaces(tags, new HashSet<>(namespaces), key);
     }
 
-    public static @NonNull Optional<String> findTagValueInNamespaces(Iterable<MediaHeapTag> tags, String[] namespaces, String key) {
+    public static @NonNull Optional<@NonNull String> findTagValueInNamespaces(@NonNull Iterable<@NonNull MediaHeapTag> tags, @NonNull String[] namespaces, @NonNull String key) {
         return findTagValueInNamespaces(tags, Arrays.asList(namespaces), key);
+    }
+
+    public static @NonNull Map<@NonNull String, @NonNull Map<@NonNull String, @NonNull String>> toNamespaceKeyValueMap(@NonNull Iterable<@NonNull MediaHeapTag> tags) {
+        Map<@NonNull String, @NonNull Map<@NonNull String, @NonNull String>> map = new HashMap<>();
+        for (var tag : tags) {
+            if (!map.containsKey(tag.getNamespace())) {
+                map.put(tag.getNamespace(), new HashMap<>());
+            }
+            var nsMap = map.get(tag.getNamespace());
+            nsMap.put(tag.getKey(), tag.getValue());
+        }
+        return map;
     }
 }

@@ -23,12 +23,12 @@ import java.util.Optional;
 public class Importer {
     @NonNull
     private final DatabaseConnection db;
+    @NonNull
+    private final ImportExtractor importExtractor = new ImportExtractor();
     @Getter
     @Setter
     @NonNull
     private Extractor extractor = MimeExtractor.getGlobal();
-    @NonNull
-    private final ImportExtractor importExtractor = new ImportExtractor();
 
     public Importer(@NonNull DatabaseConnection db) {
         this.db = db;

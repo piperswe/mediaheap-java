@@ -39,6 +39,10 @@ public class DatabaseConnection implements AutoCloseable {
         return conn;
     }
 
+    public static @NonNull DatabaseConnection localConnection() throws SQLException {
+        return of(DriverManager.getConnection("jdbc:sqlite:mediaheap.sqlite"));
+    }
+
     public MigrateResult runMigrations() {
         var flyway = Flyway.configure().dataSource(new SingleConnectionDataSource(connection)).locations("classpath:/net/mediaheap/database/migrations").load();
         return flyway.migrate();

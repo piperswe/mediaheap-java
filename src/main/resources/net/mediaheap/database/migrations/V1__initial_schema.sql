@@ -22,6 +22,7 @@ CREATE TABLE Tag
     FOREIGN KEY (fileId) REFERENCES File (id)
 );
 
+CREATE INDEX file_path_idx on File (path);
 CREATE INDEX tag_file_idx ON Tag (fileId);
 CREATE INDEX tag_file_namespace_idx on Tag (fileId, namespace);
 CREATE INDEX tag_file_namespace_key_idx ON Tag (fileId, namespace, key);
