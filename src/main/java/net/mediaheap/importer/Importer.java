@@ -1,6 +1,7 @@
 package net.mediaheap.importer;
 
 import com.google.common.io.BaseEncoding;
+import com.google.inject.Inject;
 import lombok.Cleanup;
 import lombok.Getter;
 import lombok.NonNull;
@@ -32,6 +33,7 @@ public class Importer {
     @NonNull
     private Extractor extractor = MimeExtractor.getGlobal();
 
+    @Inject
     public Importer(@NonNull DatabaseConnection db) {
         this.db = db;
     }

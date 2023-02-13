@@ -1,6 +1,8 @@
 package net.mediaheap.api;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,11 +15,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
+@Singleton
 public class FileServlet extends HttpServlet {
     private final Gson gson = new Gson();
 
+    @NonNull
+    private final DatabaseConnection db;
+
+    @Inject
+    FileServlet(@NonNull DatabaseConnection db) {
+        this.db = db;
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try (var db = DatabaseConnection.localConnection()) {
+        try {
             response.setCharacterEncoding("utf-8");
             var id = request.getParameter("id");
             if (id == null) {

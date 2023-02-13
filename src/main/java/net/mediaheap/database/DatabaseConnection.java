@@ -69,4 +69,8 @@ public class DatabaseConnection implements AutoCloseable {
     public void close() throws SQLException {
         connection.close();
     }
+
+    public @NonNull DatabaseModule getModule() {
+        return new DatabaseModule(this);
+    }
 }
