@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
     id 'application'
     id 'war'
-    id 'io.freefair.lombok' version '6.6.1'
+    id 'io.freefair.lombok' version '6.6.2'
     id 'org.flywaydb.flyway' version '9.14.1'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'org.gretty' version '4.0.3'
